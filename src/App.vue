@@ -1,23 +1,35 @@
 <template>
     <div id="app">
-        {{ sounds }}
+        <button @click='addNewTrack'>addNewTrack</button>
+        <button @click='addNewTact'>addNewTact</button>
+        <table border="1">
+            <tr v-for="track in melody">
+                <td v-for="tact in track">{{tact}}</td>
+            </tr>
+        </table>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+    import { mapState } from 'vuex'
 
-export default {
-  computed: mapState([
-    'sounds'
-  ])
-};
+    export default {
+      computed: mapState([
+        'melody'
+      ]),
+      methods: {
+        addNewTrack() {
+            this.$store.dispatch( 'addTrack', 'Instr 1' );
+        },
+        addNewTact() {
+            this.$store.dispatch( 'addTact', '4/4' );
+        }
+      }
+    };
 </script>
 
 <style>
-#app {
-  font-size: 18px;
-  font-family: 'Roboto', sans-serif;
-  color: blue;
-}
+    #app {
+      color: black;
+    }
 </style>

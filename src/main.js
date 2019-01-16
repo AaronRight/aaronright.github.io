@@ -9,12 +9,31 @@ import sounds from './resources/sounds.json';
 
 export const store = new Vuex.Store({
   state: {
-        melody: [],
+        melody: [[ false ]],
         sounds : sounds,
         instruments: instruments
   },
-  actions: {},
-  mutations: {},
+  actions: {
+        addTrack({commit}, instrument) {
+            commit('ADD_TRACK', instrument)
+        },
+        addTact({commit}, size) {
+            commit('ADD_TACT', size)
+        }
+  },
+  mutations: {
+        ADD_TRACK(state, instrument) {
+            state.melody.push([ instrument ]);
+            /* todo fill track if its empty and others not */
+        },
+        ADD_TACT(state, size) {
+            state.melody[0].push( size );
+
+            for( var i = 1; i < state.melody.length; i++ ){
+                state.melody[i].push( eval(size) );
+            }
+        }
+  },
   getters: {
     sounds(state) {
         return state.sounds
