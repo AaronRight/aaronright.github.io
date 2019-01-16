@@ -1,0 +1,16 @@
+<html>
+	<head>
+	    <link rel="stylesheet" href="styles/index.css">
+		<script type="text/javascript" src="scripts/vue.js"></script>
+		<script type="text/javascript" src="scripts/vuex.js"></script>
+		<script type="text/javascript" src="scripts/vue-router.js"></script>
+	</head>
+	<body>
+				 <a href="#" onClick="play()">Play</a>
+		<div id="vue-app">
+			<v-test></v-test>
+			<v-track  v-for="(t,index) in melody"  v-if="t[0]" v-bind:key="t[0]" v-bind:title="t[0].getInstrument()" v-bind:row="index"></v-track>
+		</div>
+		<script type="text/javascript" src="scripts/index.js"></script>
+	</body>
+</html>

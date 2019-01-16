@@ -1,0 +1,21 @@
+{
+    "36" : { "name" : "Bass", "sound": ""},
+    "37" : { "name" : "Stick", "sound": ""},
+    "38" : { "name" : "Snare", "sound": ""},
+    "41" : { "name": "Low Floor Tom", "sound": ""},
+    "42" : { "name": "Closed Hi-Hat", "sound": ""},
+    "43" : { "name": "High Floor Tom", "sound": ""},
+    "44" : { "name": "Pedal Hi-Hat", "sound": ""},
+    "45" : { "name": "Low Tom", "sound": ""},
+    "46" : { "name": "Open Hi-Hat", "sound": ""},
+    "47" : { "name": "Low-Mid Tom", "sound": ""},
+    "48" : { "name": "Hi-Mid Tom", "sound": ""},
+    "49" : { "name": "Crash Cymbal 1", "sound": ""},
+    "50" : { "name": "Hi Tom", "sound": ""},
+    "51" : { "name": "Ride Cymbal", "sound": ""},
+    "52" : { "name": "Chinese Cymbal", "sound": ""},
+    "53" : { "name": "Ride Bell", "sound": ""},
+    "55" : { "name": "Splash Cymbal", "sound": ""},
+    "56" : { "name": "Cowbell", "sound": ""},
+    "57" : { "name": "Crash Cymbal 2", "sound": ""}
+}

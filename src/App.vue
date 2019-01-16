@@ -1,16 +1,16 @@
 <template>
     <div id="app">
-        {{ message }}
+        {{ sounds }}
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  data() {
-    return {
-      message: 'Hello World',
-    };
-  },
+  computed: mapState([
+    'sounds'
+  ])
 };
 </script>
 
