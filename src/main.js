@@ -7,6 +7,17 @@ Vue.use(Vuex);
 import instruments from './resources/instruments.json';
 import sounds from './resources/sounds.json';
 
+function generate_notes( size ){
+    var note_size = size.split('/')[1];
+    var counter = eval(size) / ( 1 / note_size );
+
+    var notes = [];
+    for( var i = 0; i < counter; i++ ){
+        notes.push( { value : 0, size : 1 / note_size } );
+    }
+    return notes;
+}
+
 export const store = new Vuex.Store({
   state: {
         melody: [[ false ]],
@@ -23,14 +34,19 @@ export const store = new Vuex.Store({
   },
   mutations: {
         ADD_TRACK(state, instrument) {
-            state.melody.push([ instrument ]);
-            /* todo fill track if its empty and others not */
+            state.melody.push([ instrument ]); // set instrument
+
+            for( var i = 1; i < state.melody[0].length; i++ ){   // add tacts with notes
+                state.melody[ state.melody.length-1 ].push( generate_notes( state.melody[0][i] ) );
+            }
         },
         ADD_TACT(state, size) {
-            state.melody[0].push( size );
+            state.melody[0].push( size ); // set size of tact
 
-            for( var i = 1; i < state.melody.length; i++ ){
-                state.melody[i].push( eval(size) );
+            var notes = generate_notes(size);
+
+            for( var i = 1; i < state.melody.length; i++ ){ // for each instrument
+                state.melody[i].push( notes );         // add notes
             }
         }
   },

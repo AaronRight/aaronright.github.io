@@ -4,7 +4,18 @@
         <button @click='addNewTact'>addNewTact</button>
         <table border="1">
             <tr v-for="track in melody">
-                <td v-for="tact in track">{{tact}}</td>
+                <td v-for="tact in track">
+                    <table v-if="Array.isArray(tact)" >
+                        <tr>
+                            <td v-for="note in tact">
+                                <input type='checkbox' :checked='note.value'/>
+                            </td>
+                        </tr>
+                    </table>
+                    <div v-else>
+                        {{tact}}
+                    </div>
+                </td>
             </tr>
         </table>
     </div>
