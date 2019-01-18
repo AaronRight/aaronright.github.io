@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <button @click='play'>play</button>
+        <metronome></metronome>
 
         <button @click='addNewTrack'>addNewTrack</button>
         <button @click='addNewTact'>addNewTact</button>
@@ -25,7 +25,7 @@
 
 <script>
     import { mapState } from 'vuex'
-    //import soundFile from './resources/sounds/cowbell.mp3';
+    import metronome from './components/Metronome.vue';
 
     export default {
       computed: mapState([
@@ -37,12 +37,10 @@
         },
         addNewTact() {
             this.$store.dispatch( 'addTact', '4/4' );
-        },
-        play() {
-            var audio = new Audio( require('./resources/sounds/cowbell.mp3'));
-            //audio.crossOrigin = 'anonymous';
-        	audio.play();
         }
+      },
+      components: {
+        metronome
       }
     };
 </script>
