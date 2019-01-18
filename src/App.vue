@@ -1,6 +1,9 @@
 <template>
     <div id="app">
         <metronome></metronome>
+        <test></test>
+
+        <br>
 
         <button @click='addNewTrack'>addNewTrack</button>
         <button @click='addNewTact'>addNewTact</button>
@@ -26,6 +29,7 @@
 <script>
     import { mapState } from 'vuex'
     import metronome from './components/Metronome.vue';
+    import test from './Test.vue';
 
     export default {
       computed: mapState([
@@ -40,7 +44,7 @@
         }
       },
       components: {
-        metronome
+        metronome, test
       }
     };
 </script>
