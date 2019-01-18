@@ -14,10 +14,7 @@ module.exports = {
       : 'babel-loader' },
       { test: /\.vue$/, use: 'vue-loader'},
       { test: /\.css$/, use: ['vue-style-loader', 'css-loader']},
-      { test: /\.mp3$/, loader: 'file'/*, query: {
-            name: 'static/media/[name].[hash:8].[ext]'
-         }*/
-      }
+      { test: /\.(jpg|mp3)$/, use: [ { loader: 'file-loader', options: {} } ] }
     ]
   },
   plugins: [
