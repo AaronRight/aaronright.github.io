@@ -10,9 +10,14 @@ module.exports = {
   entry: './src/main.js',
   module: {
     rules: [
-      { test: /\.js$/, use: 'babel-loader' },
-      { test: /\.vue$/, use: 'vue-loader' },
+      { test: /\.js$/, use
+      : 'babel-loader' },
+      { test: /\.vue$/, use: 'vue-loader'},
       { test: /\.css$/, use: ['vue-style-loader', 'css-loader']},
+      { test: /\.mp3$/, loader: 'file'/*, query: {
+            name: 'static/media/[name].[hash:8].[ext]'
+         }*/
+      }
     ]
   },
   plugins: [

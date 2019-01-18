@@ -1,5 +1,7 @@
 <template>
     <div id="app">
+        <button @click='play'>play</button>
+
         <button @click='addNewTrack'>addNewTrack</button>
         <button @click='addNewTact'>addNewTact</button>
         <table border="1">
@@ -23,6 +25,7 @@
 
 <script>
     import { mapState } from 'vuex'
+    //import soundFile from './resources/sounds/cowbell.mp3';
 
     export default {
       computed: mapState([
@@ -34,6 +37,11 @@
         },
         addNewTact() {
             this.$store.dispatch( 'addTact', '4/4' );
+        },
+        play() {
+            var audio = new Audio( require('./resources/sounds/cowbell.mp3'));
+            //audio.crossOrigin = 'anonymous';
+        	audio.play();
         }
       }
     };
