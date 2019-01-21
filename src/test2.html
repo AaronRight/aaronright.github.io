@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <style>
+            label {
+                position:relative;
+                cursor:pointer;
+            }
+            label [type="checkbox"] {
+                display:none;
+            }
+            [type="checkbox"] + span {
+                display:inline-block;
+                padding: 15px;
+            }
+            :checked + span {
+                background:rgba(70,70,70,0.5);
+                display:inline-block;
+            }
+            [type="checkbox"][disabled] + span {
+                background:red;
+            }
+            span {
+                border: 1px gray solid;
+            }
+
+            .wrapper { position: relative; }
+
+            .check_check { z-index: 10; }
+
+            .check_value {
+              position: absolute;
+              top: 0;
+              left: 0;
+              padding: 6px;
+              z-index: 5;
+            }
+
+            .check_value  span {
+              padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id=app>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td v-for='tact in melody[0]'>
+                            <label>
+                                <input type="checkbox"/>
+                                <span></span>
+                            </label>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for='track in melody'>
+                        <td v-for='tact in track'>
+                            <label>
+                                <input type="checkbox"/>
+                                <span></span>
+                            </label>
+                            <table><tr><td class="wrapper" v-for='note in tact'>
+                                <label class="check_check">
+                                    <input type="checkbox"/>
+                                    <span></span>
+                                </label>
+                                <label class="check_value">
+                                    <input type="checkbox" :checked="note"/>
+                                    <span></span>
+                                </label>
+                            </td></tr></table>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+
+        <script>
+            Vue.prototype.melody = [
+                [ [ 1, 0, 1, 0 ], [ 1, 0, 1, 0 ], [ 1, 0, 1, 0 ], [ 1, 0, 1, 0 ] ],
+                [ [ 0, 0, 1, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 0 ] ],
+                [ [ 1, 0, 0, 0 ], [ 1, 0, 1, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 1, 0 ] ]
+            ];
+            new Vue({el: '#app'})
+        </script>
+    </body>
+</html>

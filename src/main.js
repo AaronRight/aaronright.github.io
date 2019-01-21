@@ -7,6 +7,7 @@ Vue.use(Vuex);
 import instruments from './resources/instruments.json';
 import sounds from './resources/sounds.json';
 
+
 function generate_notes( size ){
     var note_size = size.split('/')[1];
     var counter = eval(size) / ( 1 / note_size );
@@ -43,10 +44,8 @@ export const store = new Vuex.Store({
         ADD_TACT(state, size) {
             state.melody[0].push( size ); // set size of tact
 
-            var notes = generate_notes(size);
-
             for( var i = 1; i < state.melody.length; i++ ){ // for each instrument
-                state.melody[i].push( notes );         // add notes
+                state.melody[i].push( generate_notes(size) );         // add notes
             }
         }
   },

@@ -1,19 +1,29 @@
 <template>
     <div id="app">
         <metronome></metronome>
+
         <test></test>
 
         <br>
 
-        <button @click='addNewTrack'>addNewTrack</button>
+        <popup id="popup">
+            <add_track></add_track>
+        </popup>
+
+        <br>
+
+        <button @click='play'>play</button>
         <button @click='addNewTact'>addNewTact</button>
         <table border="1">
-            <tr v-for="track in melody">
-                <td v-for="tact in track">
+            <tr v-for="(track, index_tr) in melody">
+                <td v-for="(tact, index_ta) in track">
                     <table v-if="Array.isArray(tact)" >
                         <tr>
-                            <td v-for="note in tact">
-                                <input type='checkbox' :checked='note.value'/>
+                            <td v-for="(note, index_n) in tact">
+                                <input type='checkbox'
+                                       :checked='note.value'
+                                        v-model="note.value"
+                                />
                             </td>
                         </tr>
                     </table>
@@ -22,6 +32,7 @@
                     </div>
                 </td>
             </tr>
+
         </table>
     </div>
 </template>
@@ -29,6 +40,8 @@
 <script>
     import { mapState } from 'vuex'
     import metronome from './components/Metronome.vue';
+    import add_track from './components/AddTrack.vue';
+    import popup from './components/Popup.vue';
     import test from './Test.vue';
 
     export default {
@@ -36,15 +49,20 @@
         'melody'
       ]),
       methods: {
-        addNewTrack() {
-            this.$store.dispatch( 'addTrack', 'Instr 1' );
-        },
         addNewTact() {
             this.$store.dispatch( 'addTact', '4/4' );
+        },
+        play(){
+            //console.log(this.melody);
+
+            document.getElementById('popup').focus();
+            // create instruments
+            // create timers
+            // start playing
         }
       },
       components: {
-        metronome, test
+        metronome, test, add_track, popup
       }
     };
 </script>
