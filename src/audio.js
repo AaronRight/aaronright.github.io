@@ -1,3 +1,5 @@
+//https://webaudioapi.com/samples/rhythm/
+
 // Start off by initializing a new context.
 context = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -113,6 +115,11 @@ RhythmSample.prototype.play = function() {
   var startTime = context.currentTime + 0.100;
   var tempo = 80; // BPM (beats per minute)
   var eighthNoteTime = (60 / tempo) / 2;
+
+ // x2
+ // | . . . . . . . . |                             
+ // | .       .       |          
+ // |     .       .   |          
 
   // Play 2 bars of the following:
   for (var bar = 0; bar < 2; bar++) {
