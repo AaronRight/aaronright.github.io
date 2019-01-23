@@ -2,7 +2,7 @@
     <div id="app">
         <metronome></metronome>
 
-        <test></test>
+        <!--test></test>
 
         <br>
 
@@ -33,7 +33,7 @@
                 </td>
             </tr>
 
-        </table>
+        </table-->
     </div>
 </template>
 
