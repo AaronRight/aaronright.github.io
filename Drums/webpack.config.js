@@ -6,21 +6,30 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+var path = require('path')
+
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 module.exports = {
   entry: './src/main.js',
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': resolve('src'),
+    }
+  },
   module: {
     rules: [
-      { test: /\.js$/, use
-      : 'babel-loader' },
+      { test: /\.js$/, use: 'babel-loader' },
       { test: /\.vue$/, use: 'vue-loader'},
       { test: /\.css$/, use: ['vue-style-loader', 'css-loader']},
       { test: /\.(jpg|mp3)$/, use: [ { loader: 'file-loader', options: {} } ] }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-    }),
+    new HtmlWebpackPlugin({ template: './src/index.html',}),
     new VueLoaderPlugin(),
-  ]
+  ]  
 };

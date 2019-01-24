@@ -21,13 +21,8 @@
 
 <script>
     import { mapState } from 'vuex'
-    import metronome from './components/Metronome.vue';
-    import add_track from './components/AddTrack.vue';
-    import track_list from './components/TrackList.vue';
-    import popup from './components/Popup.vue';
-    import v_menu from './components/Menu.vue';
-    import test from './components/Test.vue';
-
+    import { metronome, add_track, track_list, popup, v_menu, test } from './components';
+    
     export default {
       data:  function() {
          return  {
