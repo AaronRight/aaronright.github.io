@@ -21,15 +21,15 @@
                 this.p = false;
                 event.target.innerText = 'Stop sample';
                 this.timer1 = setInterval(
-                    function(){ new Audio( require('./resources/sounds/hi-hat_1.mp3')).play() },
+                    function(){ new Audio( require('../resources/sounds/hi-hat_1.mp3')).play() },
                     60 / 240 * 1000
                 );
                 this.timer2 = setInterval(
-                    function(){ new Audio( require('./resources/sounds/snare_1.mp3')).play() },
+                    function(){ new Audio( require('../resources/sounds/snare_1.mp3')).play() },
                     60 / 60 * 1000
                 );
                 this.timer3 = setInterval(
-                    function(){ new Audio( require('./resources/sounds/bass_1.mp3')).play() },
+                    function(){ new Audio( require('../resources/sounds/bass_1.mp3')).play() },
                     60 / 120 * 1000
                 );
            } else {

@@ -1,50 +1,44 @@
 <template>
     <div id="app">
+        <button @click='show_menu'>show_menu</button> <v_menu :actions='actions' id='show_menu'></v_menu>
         <metronome></metronome>
 
-        <!--test></test>
+        <test></test>
 
         <br>
 
-        <popup id="popup">
+        <button @click='show_popup'>show_popup</button>
+        <popup id="show_popup">
             <add_track></add_track>
         </popup>
 
         <br>
 
-        <button @click='play'>play</button>
         <button @click='addNewTact'>addNewTact</button>
-        <table border="1">
-            <tr v-for="(track, index_tr) in melody">
-                <td v-for="(tact, index_ta) in track">
-                    <table v-if="Array.isArray(tact)" >
-                        <tr>
-                            <td v-for="(note, index_n) in tact">
-                                <input type='checkbox'
-                                       :checked='note.value'
-                                        v-model="note.value"
-                                />
-                            </td>
-                        </tr>
-                    </table>
-                    <div v-else>
-                        {{tact}}
-                    </div>
-                </td>
-            </tr>
-
-        </table-->
-    </div>
+        <track_list></track_list>
+	</div>
 </template>
 
 <script>
     import { mapState } from 'vuex'
     import metronome from './components/Metronome.vue';
     import add_track from './components/AddTrack.vue';
+    import track_list from './components/TrackList.vue';
     import popup from './components/Popup.vue';
-    import test from './Test.vue';
+    import v_menu from './components/Menu.vue';
+    import test from './components/Test.vue';
 
     export default {
+      data:  function() {
+         return  {
+           actions: [
+                { name: 'a' , action: function(){ alert('a_a')} },
+                { name: 'b' , action: function(){ alert('b_a')} },
+                { name: 'c' , action: function(){ alert('c_a')} }
+          ]
+         }          
+      },
+      
       computed: mapState([
         'melody'
       ]),
@@ -52,23 +46,21 @@
         addNewTact() {
             this.$store.dispatch( 'addTact', '4/4' );
         },
-        play(){
-            //console.log(this.melody);
-
-            document.getElementById('popup').focus();
+        show_popup(){
+            document.getElementById('show_popup').focus();
             // create instruments
             // create timers
             // start playing
+        },
+        show_menu(){
+            document.getElementById('show_menu').focus();
         }
       },
       components: {
-        metronome, test, add_track, popup
+        metronome, test, add_track, popup, v_menu, track_list
       }
     };
 </script>
 
 <style>
-    #app {
-      color: black;
-    }
 </style>

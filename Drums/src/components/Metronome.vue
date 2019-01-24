@@ -15,20 +15,6 @@
         }
       },
       methods: {
-        /* https://www.html5rocks.com/en/tutorials/audio/scheduling/ */
-        /* play(event) {
-            if( event.target.innerText === 'Start' ){
-                event.target.innerText = 'Stop';
-                timer = setInterval(
-                    function(){ new Audio( require('../resources/sounds/cowbell.mp3')).play() },
-                    60 / this.tempo * 1000
-                );
-            } else {
-                event.target.innerText = 'Start';
-                clearInterval(timer);
-            }
-        } */
-
         play(event) {
             if( event.target.innerText === 'Start' ){
                 event.target.innerText = 'Stop';

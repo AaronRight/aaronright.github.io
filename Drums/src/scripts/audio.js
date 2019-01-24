@@ -22,7 +22,6 @@ return  window.requestAnimationFrame       ||
 };
 })();
 
-
 function playSound(buffer, time) {
   var source = context.createBufferSource();
   source.buffer = buffer;
@@ -51,9 +50,6 @@ function loadSounds(obj, soundMap, callback) {
   });
   bufferLoader.load();
 }
-
-
-
 
 function BufferLoader(context, urlList, callback) {
   this.context = context;
@@ -116,10 +112,10 @@ RhythmSample.prototype.play = function() {
   var tempo = 80; // BPM (beats per minute)
   var eighthNoteTime = (60 / tempo) / 2;
 
- // x2
- // | . . . . . . . . |                             
- // | .       .       |          
- // |     .       .   |          
+  // x2
+  // | . . . . . . . . |                             
+  // | .       .       |          
+  // |     .       .   |          
 
   // Play 2 bars of the following:
   for (var bar = 0; bar < 2; bar++) {

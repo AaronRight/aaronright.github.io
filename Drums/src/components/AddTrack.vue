@@ -1,7 +1,7 @@
 <template>
     <div class="add_track" >
         <select ref="add_track_select">
-            <option v-for="(notes, instrument) in instruments">{{ instrument }}</option>
+            <option v-for="(notes, instrument) in instruments" v-bind:key="instrument">{{ instrument }}</option>
         </select>
         <button @click='addNewTrack'>Create</button>
     </div>
