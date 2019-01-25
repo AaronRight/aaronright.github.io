@@ -4,7 +4,7 @@
         <table>
             <thead>
                 <tr>
-                    <td v-for='tact in melody[0]' v-bind:key="tact">
+                    <td v-for='tact in melody[0]'>
                         <label class="check_tact">
                             <input type="checkbox" :disabled="checked_state"/>
                             <span></span>
@@ -13,11 +13,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for='track in melody' v-bind:key="track">
-                    <td v-for='tact in track' v-bind:key="tact">
+                <tr v-for='track in melody'>
+                    <td v-for='tact in track'>
                         <table v-if="Array.isArray(tact)" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td class="wrapper" v-for='note in tact' v-bind:key="note">
+                                <td class="wrapper" v-for='note in tact'>
                                     <label class="check_check">
                                         <input type="checkbox"/>
                                         <span></span>
@@ -65,8 +65,10 @@
         computed: mapState([
             'melody'
         ]),
-        data: {
-            checked_state : false
+        data:  function() {
+            return  {
+                checked_state : false
+            }          
         },
         methods: {
             switchZIndex(){

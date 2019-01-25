@@ -134,3 +134,35 @@ RhythmSample.prototype.play = function() {
     }
   }
 };
+
+RhythmSample.prototype.play_experimental = function() {
+  var startTime = context.currentTime + 0.200;
+  var tempo = 140; // BPM 
+  var n4 = (60 / tempo) ; // fourthNoteTime
+  var n8 = n4 / 2; // eighthNoteTime
+  var n16 = n8 / 2; // sixteenthNoteTime
+
+  // note - n | length : l
+  var melody = [
+    [ this.kick ,[ {"n":1,"l":n8},{"n":1,"l":n8},{"n":0,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":0,"l":n8},{"n":0,"l":n8},{"n":1,"l":n8} ],
+    	           [ {"n":0,"l":n8},{"n":1,"l":n8},{"n":0,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":0,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8} ] ],
+    
+    [ this.snare,[ {"n":0,"l":n8},{"n":0,"l":n8},{"n":1,"l":n8},{"n":0,"l":n8},{"n":0,"l":n8},{"n":1,"l":n8},{"n":0,"l":n8},{"n":0,"l":n8} ],
+    		         [ {"n":0,"l":n8},{"n":0,"l":n8},{"n":1,"l":n8},{"n":0,"l":n8}, {"n":0,"l":n8},{"n":1,"l":n8},{"n":0,"l":n8},{"n":0,"l":n8} ] ],
+    
+    [ this.hihat,[ {"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8}, {"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n16}, {"n":1,"l":n16} ],
+    	           [ {"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n8},{"n":1,"l":n16}, {"n":1,"l":n16} ] ]
+  ];
+    for (let bar = 1; bar < melody[0].length; bar++) { // play every tact
+      let time = startTime + bar * 8 * n8;
+      
+      for( let track = 0; track < melody.length; track++){
+        let total_delay = 0;  
+        for( let note = 0; note < melody[track][bar].length; note++ ){
+          if( melody[track][bar][note].n == 1 ){
+            playSound(melody[track][0], time + total_delay);
+          } total_delay += melody[track][bar][note].l;
+        }
+      }
+    }
+};
