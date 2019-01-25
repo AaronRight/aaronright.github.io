@@ -8,10 +8,10 @@
     module.exports = {
       name: 'test',
       
-      mounted() {
-           var ff = new RhythmSample();
-           ff.play_experimental();
-        
+      methods: {
+        play(){
+            this.rhythm_sample.play_experimental();
+        }
       }
     };
 </script>
