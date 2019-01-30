@@ -1,12 +1,23 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VueRouter from 'vue-router';
 import App from './App.vue';
 
 Vue.use(Vuex);
+Vue.use(VueRouter);
 
 import instruments from './resources/instruments.json';
 import sounds from './resources/sounds.json';
 
+import {  Track, Bar, Note } from './components/'
+
+const router = new VueRouter({
+    routes : [
+        { path: '/track', component: Track },
+        { path: '/bar', component: Bar },
+        { path: '/note', component: Note }
+        ] 
+})
 
 function generate_notes( size ){
     var note_size = size.split('/')[1];
@@ -66,5 +77,6 @@ export const store = new Vuex.Store({
 new Vue({
   el: '#app',
   store,
-  render: h => h(App),
+  router,
+  render: h => h(App)
 });

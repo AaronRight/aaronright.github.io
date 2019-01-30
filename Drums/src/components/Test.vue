@@ -6,9 +6,7 @@
 
 <script>
     module.exports = {
-      name: 'test',
-      
-      mounted() {
+        mounted() {
            var ff = new RhythmSample();
            ff.play_experimental();
         

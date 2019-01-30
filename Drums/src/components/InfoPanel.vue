@@ -7,11 +7,10 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import { mapState } from 'vuex';
     
     export default {
-      name: 'v-info-panel',
-      computed: mapState([
+        computed: mapState([
         'current_component'
       ])
     };

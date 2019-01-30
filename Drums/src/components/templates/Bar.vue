@@ -3,7 +3,5 @@
 </template>
 
 <script>
-    export default {
-      name: 'v-bar'
-    };
+    export default {};
 </script>

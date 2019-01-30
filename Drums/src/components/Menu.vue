@@ -9,8 +9,7 @@
 <script>
     import popup from "./Popup.vue";
     export default {
-      name: 'v-menu',
-      props: ['actions'],
+        props: ['actions'],
       components: {
           popup
       }

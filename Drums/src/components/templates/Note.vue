@@ -3,7 +3,5 @@
 </template>
 
 <script>
-    export default {
-      name: 'v-note'
-    };
+    export default {};
 </script>

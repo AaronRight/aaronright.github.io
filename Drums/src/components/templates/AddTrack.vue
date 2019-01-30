@@ -10,7 +10,6 @@
 <script>
     import { mapState } from 'vuex'
     export default {
-      name: 'add_track',
       computed: mapState([
         'instruments'
       ]),

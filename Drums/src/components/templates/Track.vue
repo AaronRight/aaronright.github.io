@@ -3,7 +3,5 @@
 </template>
 
 <script>
-    export default {
-      name: 'v-track'
-    };
+    export default {};
 </script>

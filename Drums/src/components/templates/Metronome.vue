@@ -6,9 +6,8 @@
 </template>
 
 <script>
-    module.exports = {
-      name: 'metronome',
-      data: function(){
+    export default {
+        data: function(){
         return {
             tempo : 60,
             timer : {}

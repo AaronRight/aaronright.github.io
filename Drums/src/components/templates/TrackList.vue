@@ -61,7 +61,6 @@
 <script>
     import { mapState } from 'vuex';
     export default {
-        name: 'track_list',
         computed: mapState([
             'melody'
         ]),

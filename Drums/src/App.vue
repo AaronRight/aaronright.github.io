@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <button @click='show_menu'>show_menu</button> <v_menu :actions='actions' id='show_menu'></v_menu>
+        <button @click='show_menu'>show_menu</button> <v-menu :actions='actions' id='show_menu'></v-menu>
         <metronome></metronome>
 
         <test></test>
@@ -8,22 +8,26 @@
         <br>
 
         <button @click='show_popup'>show_popup</button>
-        <popup id="show_popup">
-            <add_track></add_track>
-        </popup>
+        <v-popup id="show_popup">
+            <add-track></add-track>
+        </v-popup>
 
         <br>
 
         <button @click='addNewTact'>addNewTact</button>
-        <track_list></track_list>
+        <track-list></track-list>
         
-        <v_info_panel></v_info_panel>
+        <router-link to="/track">Track</router-link>
+        <router-link to="/bar">Bar</router-link>
+        <router-link to="/note">Note</router-link>
+
+        <info-panel></info-panel>
 	</div>
 </template>
-
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script>
     import { mapState } from 'vuex'
-    import { metronome, add_track, track_list, popup, v_menu, v_info_panel ,test } from './components';
+    import { Metronome, AddTrack, TrackList, Popup, Menu, InfoPanel ,Test } from './components';
     
     export default {
       data:  function() {
@@ -34,6 +38,15 @@
                 { name: 'c' , action: function(){ alert('c_a')} }
             ]
          }          
+      },
+      components: {
+          'metronome': Metronome,
+          'add-track': AddTrack,
+          'track-list': TrackList,
+          'v-popup': Popup,
+          'v-menu': Menu,
+          'info-panel': InfoPanel,
+          'test': Test
       },
       
       computed: mapState([
@@ -52,10 +65,8 @@
         show_menu(){
             document.getElementById('show_menu').focus();
         }
-      },
-      components: {
-        metronome, test, add_track, popup, v_menu, track_list, v_info_panel
       }
+      
     };
 </script>
 

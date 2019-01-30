@@ -5,9 +5,7 @@
 </template>
 
 <script>
-    export default {
-      name: 'popup'
-    };
+    export default {};
 </script>
 
 <style>
