@@ -19,6 +19,8 @@ function generate_notes( size ){
     return notes;
 }
 
+Vue.prototype.rhythm_sample = new RhythmSample();
+
 export const store = new Vuex.Store({
   state: {
         melody: [[ false ]],

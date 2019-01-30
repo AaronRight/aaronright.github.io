@@ -16,6 +16,7 @@
 
         <button @click='addNewTact'>addNewTact</button>
         <track_list></track_list>
+        
         <v_info_panel></v_info_panel>
 	</div>
 </template>
