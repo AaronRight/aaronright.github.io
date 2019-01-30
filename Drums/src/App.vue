@@ -16,21 +16,22 @@
 
         <button @click='addNewTact'>addNewTact</button>
         <track_list></track_list>
+        <v_info_panel></v_info_panel>
 	</div>
 </template>
 
 <script>
     import { mapState } from 'vuex'
-    import { metronome, add_track, track_list, popup, v_menu, test } from './components';
+    import { metronome, add_track, track_list, popup, v_menu, v_info_panel ,test } from './components';
     
     export default {
       data:  function() {
          return  {
-           actions: [
+            actions: [
                 { name: 'a' , action: function(){ alert('a_a')} },
                 { name: 'b' , action: function(){ alert('b_a')} },
                 { name: 'c' , action: function(){ alert('c_a')} }
-          ]
+            ]
          }          
       },
       
@@ -52,7 +53,7 @@
         }
       },
       components: {
-        metronome, test, add_track, popup, v_menu, track_list
+        metronome, test, add_track, popup, v_menu, track_list, v_info_panel
       }
     };
 </script>

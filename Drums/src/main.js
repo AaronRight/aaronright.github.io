@@ -22,6 +22,7 @@ function generate_notes( size ){
 export const store = new Vuex.Store({
   state: {
         melody: [[ false ]],
+        current_component: null,
         sounds : sounds,
         instruments: instruments
   },
