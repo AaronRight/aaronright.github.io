@@ -30,7 +30,7 @@
     };
 </script>
 
-<style>
+<style scoped>
     .metronome {
       border: 1px solid black;
       width : fit-content;

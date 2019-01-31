@@ -3,13 +3,15 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import App from './App.vue';
 
-Vue.use(Vuex);
-Vue.use(VueRouter);
-
 import instruments from './resources/instruments.json';
 import sounds from './resources/sounds.json';
 
-import {  Track, Bar, Note } from './components/'
+import Track from './components/templates/Track.vue'
+import Bar from './components/templates/Bar.vue'
+import Note from './components/templates/Note.vue'
+
+Vue.use(Vuex);
+Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes : [
@@ -35,7 +37,6 @@ Vue.prototype.rhythm_sample = new RhythmSample();
 export const store = new Vuex.Store({
   state: {
         melody: [[ false ]],
-        current_component: null,
         sounds : sounds,
         instruments: instruments
   },

@@ -2,7 +2,7 @@
     <div id="app">
         <button @click='show_menu'>show_menu</button> <v-menu :actions='actions' id='show_menu'></v-menu>
         <metronome></metronome>
-
+        
         <test></test>
 
         <br>
@@ -21,14 +21,22 @@
         <router-link to="/bar">Bar</router-link>
         <router-link to="/note">Note</router-link>
 
-        <info-panel></info-panel>
+        <v-info-panel></v-info-panel>
+        <v-track/>
 	</div>
 </template>
-<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script>
+    import Vue from 'vue';
     import { mapState } from 'vuex'
-    import { Metronome, AddTrack, TrackList, Popup, Menu, InfoPanel ,Test } from './components';
-    
+    import Metronome from './components/templates/Metronome.vue';
+    import AddTrack from './components/templates/AddTrack.vue';
+    import TrackList from './components/templates/TrackList.vue';
+    import Popup from './components/Popup.vue';
+    import Menu from './components/Menu.vue';
+    import InfoPanel from './components/InfoPanel.vue';
+    import Test from './components/Test.vue';
+    import Track from './components/templates/Track.vue';
+
     export default {
       data:  function() {
          return  {
@@ -45,8 +53,9 @@
           'track-list': TrackList,
           'v-popup': Popup,
           'v-menu': Menu,
-          'info-panel': InfoPanel,
-          'test': Test
+          'v-info-panel': InfoPanel,
+          'test': Test,
+          'v-track' : Track
       },
       
       computed: mapState([
