@@ -17,9 +17,9 @@
         <button @click='addNewTact'>addNewTact</button>
         <track-list></track-list>
         
-        <router-link to="/track">Track</router-link>
-        <router-link to="/bar">Bar</router-link>
-        <router-link to="/note">Note</router-link>
+        <router-link to="/track/4">Track</router-link>
+        <router-link to="/bar/3">Bar</router-link>
+        <router-link to="/note/5/2/4">Note</router-link>
 
         <info-panel></info-panel>
 	</div>

@@ -1,5 +1,5 @@
 <template>
-    <div>bar</div>
+    <div>bar {{ $route.params.index }}</div>
 </template>
 
 <script>

@@ -13,9 +13,9 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes : [
-        { path: '/track', component: Track },
-        { path: '/bar', component: Bar },
-        { path: '/note', component: Note }
+        { path: '/track/:index', component: Track },
+        { path: '/bar/:index', component: Bar },
+        { path: '/note/:track/:bar/:index', component: Note }
         ] 
 })
 
