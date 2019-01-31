@@ -13,48 +13,36 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for='track in melody'>
-                    <td v-for='tact in track'>
-                        <table v-if="Array.isArray(tact)" cellspacing="0" cellpadding="0">
+                <tr v-for='(track, index_t) in melody'>
+                    <td v-for='(bar, index_b) in track'>
+                        <table v-if="Array.isArray(bar)" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td class="wrapper" v-for='note in tact'>
+                                <td class="wrapper" v-for='(note, index_n) in bar'>
                                     <label class="check_check">
                                         <input type="checkbox"/>
                                         <span></span>
                                     </label>
                                     <label class="check_value">
                                         <input type="checkbox" :checked='note.value' v-model="note.value"/>
-                                        <span></span>
+                                        <span @click="infoNote(index_t, index_b, index_n)"></span>
                                     </label>
                                 </td>
                             </tr>
                         </table>
                         <div v-else>
-                            {{tact}}
+                            <router-link
+                            :to="{{ index_t == 0 ? (index_b == 0 ? bar : 'its a bar') : 'its a track' }}
+"
+                            >{{bar}}</router-link>
+                            
+                            <!--router-link to="/track/4">Track</router-link>
+                            <router-link-- to="/bar/3">Bar</router-link-->
                         </div>
                     </td>
                 </tr>
             </tbody>
             <tfoot></tfoot>
         </table>
-
-        <!--table border="1">
-            <tr v-for="(track, index_tr) in melody">
-                <td v-for="(tact, index_ta) in track">
-                    <table v-if="Array.isArray(tact)" >
-                        <tr>
-                            <td v-for="(note, index_n) in tact">
-                                <input type='checkbox'
-                                       :checked='note.value'
-                                        v-model="note.value"
-                                />
-                            </td>
-                        </tr>
-                    </table>
-                    <div v-else> {{tact}} </div>
-                </td>
-            </tr>
-        </table-->
     </div>
 </template>
 
@@ -74,6 +62,13 @@
                 var global = getCSSRule('.check_check');
                 if (global.style.zIndex < 5) global.style.zIndex = 10;
                 else global.style.zIndex = 0;
+            },
+            infoNote: function(track, bar, note) {
+                /* 
+                    with "function" works "this" in vue context 
+                    https://vuejs.org/v2/api/#data
+                */
+                this.$router.push('/note/'+track+'/'+bar+'/'+note);
             }
         }  
     };
