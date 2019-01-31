@@ -6,9 +6,7 @@ import App from './App.vue';
 import instruments from './resources/instruments.json';
 import sounds from './resources/sounds.json';
 
-import Track from './components/templates/Track.vue'
-import Bar from './components/templates/Bar.vue'
-import Note from './components/templates/Note.vue'
+import {Track, Bar, Note} from './components';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
