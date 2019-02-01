@@ -1,7 +1,10 @@
 <template>
-    <div>bar {{ $route.params.index }}</div>
+    <div>{{ bar($route.params.index) }}</div>
 </template>
 
 <script>
-    export default {};
+    import { mapGetters } from 'vuex'
+    export default {
+        computed: mapGetters(['bar'])
+    };
 </script>

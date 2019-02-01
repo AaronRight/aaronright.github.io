@@ -32,6 +32,22 @@ function generate_notes( size ){
 
 Vue.prototype.rhythm_sample = new RhythmSample();
 
+/*
+    +--------------+------------+------------+- ... -+------------+
+    |     name     | bar_1_info | bar_2_info |       | bar_N_info |
+    +--------------+------------+------------+- ... -+------------+
+    | track_1_info |   notes    |            |       |            |
+    +--------------+------------+------------+- ... -+------------+
+    | track_2_info |            |            |       |            |
+    +--------------+------------+------------+- ... -+------------+   
+    |              |            |            |       |            |
+          ...           ...          ...                  ...
+    |              |            |            |       |            |
+    +--------------+------------+------------+- ... -+------------+   
+    | track_M_info |            |            |       |            |
+    +--------------+------------+------------+- ... -+------------+     
+*/
+
 export const store = new Vuex.Store({
   state: {
         melody: [[ false ]],
@@ -68,6 +84,15 @@ export const store = new Vuex.Store({
     },
     instruments(state) {
         return state.instruments
+    },
+    track: (state) => (index) => {
+        return state.melody[index][0];
+    },
+    bar: (state) => (index) => {
+        return state.melody[0][index];
+    },
+    note: (state) => (track, bar, index) => {
+        return state.melody[track][bar][index];
     }
   },
   modules: {}

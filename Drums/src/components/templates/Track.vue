@@ -1,7 +1,10 @@
 <template>
-    <div>track {{ $route.params.index }}</div>
+    <div>{{ track( $route.params.index ) }}</div>
 </template>
 
 <script>
-    export default {};
+    import { mapGetters } from 'vuex'
+    export default {
+        computed: mapGetters(['track'])
+    };
 </script>
