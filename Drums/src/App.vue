@@ -7,14 +7,13 @@
 
         <br>
 
-        <button @click='show_popup'>show_popup</button>
+        <button @click='show_popup'>Add Track</button>
         <v-popup id="show_popup">
             <add-track></add-track>
         </v-popup>
-
-        <br>
-
         <button @click='addNewTact'>addNewTact</button>
+        <button @click='play'>play</button>
+
         <track-list></track-list>
         <info-panel></info-panel>
 	</div>
@@ -53,12 +52,12 @@
         },
         show_popup(){
             document.getElementById('show_popup').focus();
-            // create instruments
-            // create timers
-            // start playing
         },
         show_menu(){
             document.getElementById('show_menu').focus();
+        },
+        play(){
+            
         }
       }
       
