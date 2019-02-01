@@ -62,19 +62,18 @@ export const store = new Vuex.Store({
             commit('ADD_TACT', size)
         }
   },
+
   mutations: {
         ADD_TRACK(state, instrument) {
             state.melody.push([ instrument ]); // set instrument
-
-            for( var i = 1; i < state.melody[0].length; i++ ){   // add tacts with notes
-                state.melody[ state.melody.length-1 ].push( generate_notes( state.melody[0][i] ) );
+            for( var i = 1; i < state.melody[0].length; i++ ){
+                state.melody[ state.melody.length-1 ].push( [{ size: 1 , value: 0 }] );
             }
         },
         ADD_TACT(state, size) {
-            state.melody[0].push( size ); // set size of tact
-
+            state.melody[0].push( { 'size' : size } ); // set size of tact
             for( var i = 1; i < state.melody.length; i++ ){ // for each instrument
-                state.melody[i].push( generate_notes(size) );         // add notes
+                state.melody[i].push( [{ size: 1 , value: 0 }] );         
             }
         }
   },

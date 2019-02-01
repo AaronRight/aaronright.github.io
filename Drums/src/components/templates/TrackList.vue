@@ -17,7 +17,7 @@
                     <td v-for='(bar, index_b) in track'>
                         <table v-if="index_t!=0 && index_b!=0" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td class="wrapper" v-for='(note, index_n) in bar'>
+                                <td class="wrapper" v-for='(note, index_n) of bar'>
                                     <label class="check_check">
                                         <input type="checkbox"/>
                                         <span></span>
@@ -32,11 +32,14 @@
                         <div v-else-if="index_t==0 && index_b==0">
                             {{bar}}
                         </div>
+                        <div v-else-if="index_t!=0 && index_b==0">
+                            <router-link :to="'/track/' + index_t">
+                                {{bar.name}}
+                            </router-link>
+                        </div>
                         <div v-else>
-                            <router-link 
-                                :to="index_t == 0 ? (index_b == 0 ? bar : '/bar/' + index_b) : '/track/' + index_t"
-                            >
-                                {{bar}}
+                            <router-link :to="'/bar/' + index_b">
+                                {{bar.size}}
                             </router-link>
                         </div>
                     </td>

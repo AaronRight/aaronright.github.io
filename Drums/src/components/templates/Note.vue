@@ -1,7 +1,18 @@
 <template>
-    <div>note  {{ $route.params.track }} :  {{ $route.params.bar }} :  {{ $route.params.index }}</div>
+    <div>
+        {{ 
+            note(
+                $route.params.track,
+                $route.params.bar,
+                $route.params.index
+            ) 
+        }} 
+    </div>
 </template>
 
 <script>
-    export default {};
+    import { mapGetters } from 'vuex'
+    export default {
+        computed: mapGetters(['note'])
+    };
 </script>

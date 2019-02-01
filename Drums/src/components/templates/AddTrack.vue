@@ -18,7 +18,12 @@
       },
       methods: {
         addNewTrack() {
-            this.$store.dispatch( 'addTrack', this.$refs.add_track_select.value );
+            this.$store.dispatch( 'addTrack', 
+              { 
+                name: this.$refs.add_track_select.value, 
+                notes: this.instruments[this.$refs.add_track_select.value]
+              }
+            );
         }
       }
     };
