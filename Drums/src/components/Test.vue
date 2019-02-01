@@ -6,11 +6,11 @@
 
 <script>
     module.exports = {
-        mounted() {
-           var ff = new RhythmSample();
-           ff.play_experimental();
-        
-      }
+        methods: { 
+         play:function(){
+           this.rhythm_sample.play_experimental();
+          }
+        }
     };
 </script>
 

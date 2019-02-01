@@ -15,7 +15,7 @@
             <tbody>
                 <tr v-for='(track, index_t) in melody'>
                     <td v-for='(bar, index_b) in track'>
-                        <table v-if="Array.isArray(bar)" cellspacing="0" cellpadding="0">
+                        <table v-if="index_t!=0 && index_b!=0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td class="wrapper" v-for='(note, index_n) in bar'>
                                     <label class="check_check">
@@ -29,6 +29,9 @@
                                 </td>
                             </tr>
                         </table>
+                        <div v-else-if="index_t==0 && index_b==0">
+                            {{bar}}
+                        </div>
                         <div v-else>
                             <router-link 
                                 :to="index_t == 0 ? (index_b == 0 ? bar : '/bar/' + index_b) : '/track/' + index_t"
