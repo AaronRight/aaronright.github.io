@@ -30,13 +30,11 @@
                             </tr>
                         </table>
                         <div v-else>
-                            <router-link
-                            :to="{{ index_t == 0 ? (index_b == 0 ? bar : 'its a bar') : 'its a track' }}
-"
-                            >{{bar}}</router-link>
-                            
-                            <!--router-link to="/track/4">Track</router-link>
-                            <router-link-- to="/bar/3">Bar</router-link-->
+                            <router-link 
+                                :to="index_t == 0 ? (index_b == 0 ? bar : '/bar/' + index_b) : '/track/' + index_t"
+                            >
+                                {{bar}}
+                            </router-link>
                         </div>
                     </td>
                 </tr>
