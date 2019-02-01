@@ -137,7 +137,7 @@ RhythmSample.prototype.play = function() {
 
 RhythmSample.prototype.play_experimental = function() {
   var startTime = context.currentTime + 0.100;
-  var tempo = 90; // BPM 
+  var tempo = 120; // BPM 
   var n4 = (60 / tempo) ; // fourthNoteTime
   var n8 = n4 / 2; // eighthNoteTime
   var n16 = n8 / 2; // sixteenthNoteTime
@@ -149,19 +149,17 @@ RhythmSample.prototype.play_experimental = function() {
     [ this.hihat,[ {"n":1,"l":n4},                  {"n":1,"l":n4},                                   {"n":1,"l":n4},                                   {"n":1,"l":n4}                                   ]]
   ];
 
-    for (let iterations = 0; iterations < 8; iterations++){
+    for (let iterations = 0; iterations < 4; iterations++){
       for (let bar = 1; bar < melody[0].length; bar++) { // play every tact
-        let time = startTime + bar * 8 * n8;
-        
         for( let track = 0; track < melody.length; track++){
           let total_delay = 0;  
           for( let note = 0; note < melody[track][bar].length; note++ ){
             if( melody[track][bar][note].n == 1 ){
-              playSound(melody[track][0], time + total_delay);
+              playSound(melody[track][0], startTime + total_delay);
             } total_delay += melody[track][bar][note].l;
           }
         }
+        startTime += 4 * n4 /* length of bar depends on its size - temporary 4/4 => 1 */;
       }
-      startTime += 4 * n4;
     }
 };
