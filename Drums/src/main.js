@@ -5,7 +5,7 @@ import App from './App.vue';
 
 import instruments from './resources/instruments.json';
 import sounds from './resources/sounds.json';
-import note_sizes from './resources/notes.json';
+import notes from './resources/notes.json';
 
 import {Track, Bar, Note} from './components';
 
@@ -73,7 +73,8 @@ export const store = new Vuex.Store({
             'create_bar_silently': false 
         } ]],
         sounds : sounds,
-        instruments: instruments
+        instruments: instruments,
+        notes: notes
   },
   actions: {
         addTrack({commit}, instrument) {
@@ -105,6 +106,9 @@ export const store = new Vuex.Store({
   getters: {
     sounds(state) {
         return state.sounds
+    },
+    notes(state) {
+        return state.notes
     },
     instruments(state) {
         return state.instruments
