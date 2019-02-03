@@ -1,15 +1,22 @@
 <template>
-    <div class="add_track" >
-        <select ref="add_track_select">
-            <option v-for="(notes, instrument) in instruments" v-bind:key="instrument">{{ instrument }}</option>
-        </select>
-        <button @click='addNewTrack'>Create</button>
-    </div>
+    <v-popup >
+        <div class="add_track" >
+            <select ref="add_track_select">
+                <option v-for="(notes, instrument) in instruments" v-bind:key="instrument">{{ instrument }}</option>
+            </select>
+            <button @click='addNewTrack'>Create</button>
+        </div>
+    </v-popup>
 </template>
 
 <script>
     import { mapState } from 'vuex'
+    import Popup from '../Popup.vue';
+
     export default {
+      components:{
+        'v-popup' : Popup
+      },
       computed: mapState([
         'instruments'
       ]),

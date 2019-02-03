@@ -5,6 +5,7 @@ import App from './App.vue';
 
 import instruments from './resources/instruments.json';
 import sounds from './resources/sounds.json';
+import note_sizes from './resources/notes.json';
 
 import {Track, Bar, Note} from './components';
 
@@ -19,22 +20,11 @@ const router = new VueRouter({
         ] 
 })
 
-function generate_notes( size ){
-    var note_size = size.split('/')[1];
-    var counter = eval(size) / ( 1 / note_size );
-
-    var notes = [];
-    for( var i = 0; i < counter; i++ ){
-        notes.push( { value : 0, size : 1 / note_size } );
-    }
-    return notes;
-}
-
 Vue.prototype.rhythm_sample = new RhythmSample();
 
 /*
     +--------------+------------+------------+- ... -+------------+
-    |     name     | bar_1_info | bar_2_info |       | bar_N_info |
+    |  common_info | bar_1_info | bar_2_info |       | bar_N_info |
     +--------------+------------+------------+- ... -+------------+
     | track_1_info |  notes[ ]  |            |       |            |
     +--------------+------------+------------+- ... -+------------+
@@ -45,12 +35,43 @@ Vue.prototype.rhythm_sample = new RhythmSample();
     |              |            |            |       |            |
     +--------------+------------+------------+- ... -+------------+   
     | track_M_info |            |            |       |            |
-    +--------------+------------+------------+- ... -+------------+     
+    +--------------+------------+------------+- ... -+------------+   
+    
+    +-------------------------------------------------------------+
+    | common_info                                                 |
+    +-------------------------------------------------------------+
+    | - melody_name                                               |
+    | - bar_measure for default:  (4/4)                           |
+    |   - numerator                                               |
+    |   - denominator                                             |
+    | - create new bar silent or with creation window             |
+    +-------------------------------------------------------------+
+
+    +-------------------------------------------------------------+
+    | track_info                                                  |
+    +-------------------------------------------------------------+
+    | - instrument                                                |
+    |   - notes                                                   |
+    | - default note                                              |
+    | - color                                                     |
+    | - is muted?                                                 |
+    | - hidden?                                                   |
+    +-------------------------------------------------------------+
+    
+    +-------------------------------------------------------------+
+    | bar_info                                                    |
+    +-------------------------------------------------------------+
+    | - bar_measure                                               |
+    +-------------------------------------------------------------+
 */
 
 export const store = new Vuex.Store({
   state: {
-        melody: [[ false ]],
+        melody: [[ { 
+            'default_numerator' : 4, 
+            'default_denominator': 4, 
+            'create_bar_silently': false 
+        } ]],
         sounds : sounds,
         instruments: instruments
   },
@@ -58,8 +79,8 @@ export const store = new Vuex.Store({
         addTrack({commit}, instrument) {
             commit('ADD_TRACK', instrument)
         },
-        addTact({commit}, size) {
-            commit('ADD_TACT', size)
+        addTact({commit}, data_object) {
+            commit('ADD_TACT', data_object)
         }
   },
 
@@ -70,8 +91,12 @@ export const store = new Vuex.Store({
                 state.melody[ state.melody.length-1 ].push( [{ size: 1 , value: 0 }] );
             }
         },
-        ADD_TACT(state, size) {
-            state.melody[0].push( { 'size' : size } ); // set size of tact
+        ADD_TACT(state, data_object) {
+            state.melody[0].push( 
+                {   
+                    'numerator' : data_object.numerator, 
+                    'denominator': data_object.denominator
+                } );
             for( var i = 1; i < state.melody.length; i++ ){ // for each instrument
                 state.melody[i].push( [{ size: 1 , value: 0 }] );         
             }
@@ -83,6 +108,9 @@ export const store = new Vuex.Store({
     },
     instruments(state) {
         return state.instruments
+    },
+    info(state) {
+        return state.melody[0][0];
     },
     track: (state) => (index) => {
         return state.melody[index][0];

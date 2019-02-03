@@ -30,7 +30,7 @@
                             </tr>
                         </table>
                         <div v-else-if="index_t==0 && index_b==0">
-                            {{bar}}
+                            {{/*bar*/}}
                         </div>
                         <div v-else-if="index_t!=0 && index_b==0">
                             <router-link :to="'/track/' + index_t">
@@ -39,7 +39,7 @@
                         </div>
                         <div v-else>
                             <router-link :to="'/bar/' + index_b">
-                                {{bar.size}}
+                                {{bar.numerator}} / {{bar.denominator }}
                             </router-link>
                         </div>
                     </td>
