@@ -11,12 +11,13 @@
                 flex-flow: nowrap;
             }
 
-            .note{
-                height: 100%;
-            }
+            .bar_16{ width: 450px; }
+            .bar_32{ width: 600px; }
+
+            .note{ height: 100%; }
 
             .content{
-                background: red;
+                background: rgb(85, 85, 85);
                 margin: 2px;
                 width: calc(100% - 4px);
                 height: calc(100% - 4px);
@@ -45,7 +46,6 @@
             .note_32{    flex: 0 0 3.125%;  }
             .note_32_d{  flex: 0 0 4.6875%; }
             .note_32_dd{ flex: 0 0 5.46875%;}
-
         </style>
     </head>
     <body>
@@ -91,6 +91,24 @@
         <div class="bar">
             <div class="note note_2_d"> <div class="content"></div> </div>    
             <div class="note note_2_d"> <div class="content"></div> </div>  
+        </div>
+
+        <div class="bar bar_16">
+            <div class="note note_4"> <div class="content"></div> </div>
+            <div class="note note_4"> <div class="content"></div> </div>
+            <div class="note note_8"> <div class="content"></div> </div> 
+            <div class="note note_8"> <div class="content"></div> </div> 
+            <div class="note note_8"> <div class="content"></div> </div> 
+            <div class="note note_16"> <div class="content"></div> </div> 
+            <div class="note note_16"> <div class="content"></div> </div> 
+        </div>
+
+        <div class="bar bar_32">
+            <div class="note note_2_d"> <div class="content"></div> </div> 
+            <div class="note note_8"> <div class="content"></div> </div> 
+            <div class="note note_16"> <div class="content"></div> </div> 
+            <div class="note note_32"> <div class="content"></div> </div>  
+            <div class="note note_32"> <div class="content"></div> </div>  
         </div>
     </body>
 </html>
