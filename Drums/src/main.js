@@ -6,6 +6,7 @@ import App from './App.vue';
 import instruments from './resources/instruments.json';
 import sounds from './resources/sounds.json';
 import notes from './resources/notes.json';
+import template from './resources/template.json';
 
 import {Track, Bar, Note} from './components';
 
@@ -67,11 +68,11 @@ Vue.prototype.rhythm_sample = new RhythmSample();
 
 export const store = new Vuex.Store({
   state: {
-        melody: [[ { 
+        melody: template/*[[ { 
             'default_numerator' : 4, 
             'default_denominator': 4, 
             'create_bar_silently': false 
-        } ]],
+        } ]]*/,
         sounds : sounds,
         instruments: instruments,
         notes: notes
@@ -80,8 +81,11 @@ export const store = new Vuex.Store({
         addTrack({commit}, instrument) {
             commit('ADD_TRACK', instrument)
         },
-        addTact({commit}, data_object) {
-            commit('ADD_TACT', data_object)
+        addTact({commit}, params) {
+            commit('ADD_TACT', params)
+        },
+        changeNote({commit}, params) {
+            commit('CHANGE_NOTE', params)
         }
   },
 
@@ -92,15 +96,19 @@ export const store = new Vuex.Store({
                 state.melody[ state.melody.length-1 ].push( [{ size: 1 , value: 0 }] );
             }
         },
-        ADD_TACT(state, data_object) {
+        ADD_TACT(state, params) {
             state.melody[0].push( 
                 {   
-                    'numerator' : data_object.numerator, 
-                    'denominator': data_object.denominator
+                    'numerator' : params.numerator, 
+                    'denominator': params.denominator
                 } );
             for( var i = 1; i < state.melody.length; i++ ){ // for each instrument
                 state.melody[i].push( [{ size: 1 , value: 0 }] );         
             }
+        },
+        CHANGE_NOTE(state, params){
+            state.melody[params.track][params.bar][params.index].size = state.melody[params.track][params.bar][params.index].size / 2; 
+            state.melody[params.track][params.bar].splice(params.index, 0, { size: state.melody[params.track][params.bar][params.index].size , value: 0 } );
         }
   },
   getters: {

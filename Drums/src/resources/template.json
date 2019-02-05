@@ -1,1 +1,21 @@
-{"123":234}
+[
+    [ {"default_numerator":4,"default_denominator":4,"create_bar_silently":false}, 
+                    {"numerator":"4","denominator":"4","size":1},    
+                    {"numerator":"4","denominator":"4","size":1},
+                    {"numerator":"9","denominator":"8","size":1.125},
+                    {"numerator":"7","denominator":"8","size":0.875}  ],
+    [ {"name":"HI-HAT","notes":[42,44,46]},  
+                    [{"size":0.5,"value":0},{"size":0.5,"value":0}], 
+                    [{"size":0.125,"value":0},{"size":0.125,"value":0},{"size":0.250,"value":0},{"size":0.125,"value":0},{"size":0.125,"value":0},{"size":0.125,"value":0},{"size":0.125,"value":0}],
+                    [{"size":0.875,"value":0}, {"size":0.250,"value":0}],
+                    [{"size":0.125,"value":0},{"size":0.125,"value":0},{"size":0.125,"value":0},{"size":0.125,"value":0},{"size":0.125,"value":0},{"size":0.125,"value":0},{"size":0.125,"value":0}]],
+    [ {"name":"SNARE","notes":[37,38]},
+                    [{"size":1,"value":0}],
+                    [{"size":1,"value":0}],
+                    [{"size":1,"value":0}],
+                    [{"size":1,"value":0}]],
+    [ {"name":"BASS","notes":[36]},
+                    [{"size":1,"value":0}],
+                    [{"size":1,"value":0}],
+                    [{"size":1,"value":0}],[{"size":1,"value":0}]]
+]

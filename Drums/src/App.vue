@@ -59,7 +59,7 @@
             document.getElementById('show_menu').focus();
         },
         play(){
-            
+            console.log(JSON.stringify(this.melody));
         }
       }
       
