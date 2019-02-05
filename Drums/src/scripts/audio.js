@@ -106,7 +106,7 @@ var RhythmSample = function() {
   });
 };
 
-RhythmSample.prototype.play = function() {
+RhythmSample.prototype.play_demo = function() {
   // We'll start playing the rhythm 100 milliseconds from "now"
   var startTime = context.currentTime + 0.100;
   var tempo = 80; // BPM (beats per minute)
@@ -162,4 +162,34 @@ RhythmSample.prototype.play_experimental = function() {
         startTime += 4 * n4 /* length of bar depends on its size - temporary 4/4 => 1 */;
       }
     }
+};
+
+RhythmSample.prototype.play = function( melody ) {
+  var startTime = context.currentTime + 0.100;
+ 
+    melody[1][0] = this.hihat;
+    melody[2][0] = this.snare;
+    melody[3][0] = this.kick;
+
+    var tempo = 120; // BPM 
+    var n8 = (30 / tempo) ;
+    
+    function getDelay(value){
+      return n8 * value / 0.125;
+    }
+
+    console.log(melody);
+    //for (let iterations = 0; iterations < 4; iterations++){
+      for (let bar = 1; bar < melody[0].length; bar++) { // play every tact
+        for( let track = 1; track < melody.length; track++){
+          let total_delay = 0;  
+          for( let note = 0; note < melody[track][bar].length; note++ ){
+            if( melody[track][bar][note].value == 1 ){
+              playSound(melody[track][0], startTime + total_delay);
+            } total_delay += getDelay(melody[track][bar][note].size);
+          }
+        }
+        startTime += getDelay(melody[0][bar].size);
+      }
+    //}
 };

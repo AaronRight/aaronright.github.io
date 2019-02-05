@@ -59,6 +59,9 @@
             document.getElementById('show_menu').focus();
         },
         play(){
+            this.rhythm_sample.play(this.melody);
+        },
+        show(){
             console.log(JSON.stringify(this.melody));
         }
       }

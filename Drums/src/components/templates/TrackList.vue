@@ -1,7 +1,7 @@
 <template>
     <div>
     <input type="button" @click="switchZIndex()" value="Checked"/> 
-        <table>
+        <table >
             <thead>
                 <tr>
                     <td v-for='tact in melody[0]'>
@@ -109,7 +109,7 @@
 <style>
     label {
         position:relative; 
-        width: 100%;
+        width: calc(100% - 4px);
         cursor:pointer;
     }
     label [type="checkbox"] {
@@ -118,7 +118,6 @@
     }
     [type="checkbox"] + span {
         display:inline-block;
-        /*padding: 15px;*/
         padding: 10px 0px;
         width: 100%;
     }
@@ -141,13 +140,12 @@
         position: absolute;
         top: 0;
         left: 0;
-        padding: 3px;
+        padding: 1px;
         z-index: 5;
     }
 
     .check_value  span {
-        /*padding: 11px;*/
-        padding: 10px 0px;
+        padding: 8px 0px;
         border: 1px gray solid;
     }
 
