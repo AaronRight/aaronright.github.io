@@ -15,6 +15,35 @@
         <button @click='changeNote'>change Note</button>
         <!-- changing size generates following notes -->
         <button @click='changeNote'>delete</button>
+
+        <br>
+
+        <div>
+            <ul v-for="c in notes" v-bind:key="c.name">
+                <li> <label>
+                        <input type="radio" name="c.name" value="c.measure" 
+                            :checked="note( $route.params.track,$route.params.bar,$route.params.index).size == c.measure" />
+                        <span><sup>1</sup>/<sub>{{c.name}}</sub></span>
+                    </label>
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="radio" name="c.name" value="c.dotted" 
+                                    :checked="note( $route.params.track,$route.params.bar,$route.params.index).size == c.dotted"/>
+                                <span>.</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" name="c.name" value="c.double_dotted" 
+                                    :checked="note( $route.params.track,$route.params.bar,$route.params.index).size == c.double_dotted"/>
+                                <span>..</span>
+                            </label>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -41,3 +70,35 @@
         }
     };
 </script>
+
+<style scoped>
+            div ul {
+                padding: 0;
+                margin: 0;
+                list-style-type: none;
+            }
+
+            div li {
+                position: relative;
+                float: left;
+                width: 40px;
+                margin: 1%;
+            }
+
+            div li ul {
+                display: none;
+                position: absolute;
+                top: 1em;
+                left: 0;
+            }
+
+            div li > ul {
+                top: auto;
+                left: auto;
+            }
+
+            li:hover ul {
+                display: block;
+                clear: left;
+            }
+</style>

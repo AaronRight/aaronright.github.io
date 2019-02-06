@@ -6,10 +6,12 @@
     1.5 Multiple sample for each note - during playing recall random one
 2. normal UI
     2.0 Style for tablet / phone - adaptive
-        2.0.1 Cordova integration
+        2.0.1 Cordova integration - fs example? 
+        2.0.2 Choosing notes / bars mechanism
     2.1 Stop / Start from various position
     2.2 Settings system
     2.3 Save / export / load / working with file system
+        2.3.1 integration with famous format - gp5 / midi - look at tuxguitar - do everything with fs on backend? 
 3. Add hylo track
     3.1 Keyboard from left
                     bar1 | bar2 | ...
@@ -22,4 +24,5 @@
     4.1 Wave
     4.2 Timings
 5. Loop recording
+    5.1 also cut it on backend side?
 

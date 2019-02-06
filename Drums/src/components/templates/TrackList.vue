@@ -45,11 +45,11 @@
                             > 
                                 <label class="check_check">
                                     <input type="checkbox"/>
-                                    <span></span>
+                                    <span class="check_span"></span>
                                 </label>
                                 <label class="check_value">
                                     <input type="checkbox" :checked='note.value' v-model="note.value"/>
-                                    <span @click="infoNote(index_t, index_b, index_n)"></span>
+                                    <span class="check_span" @click="infoNote(index_t, index_b, index_n)"></span>
                                 </label>
                             </div>   
                         </div>
@@ -116,17 +116,17 @@
         display:none;
         width: 100%;
     }
-    [type="checkbox"] + span {
+    [type="checkbox"] + .check_span {
         display:inline-block;
         padding: 10px 0px;
         width: 100%;
     }
-    :checked + span {
+    :checked + .check_span {
         background:rgba(70,70,70,0.5);
         display:inline-block;
         width: 100%;
     }
-    [type="checkbox"][disabled] + span {
+    [type="checkbox"][disabled] + .check_span {
         background:#e8e8e8;
         width: 100%;
     }
@@ -144,7 +144,7 @@
         z-index: 5;
     }
 
-    .check_value  span {
+    .check_value .check_span {
         padding: 8px 0px;
         border: 1px gray solid;
     }
