@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            input[type="radio"] {
+                display: none;
+            }
+            input[type="radio"]:checked ~ span {
+                background:gray;
+            }
+            input[type="radio"] ~ span {
+                width: 3em;
+            }
+        </style>
+    </head>
+    <body>
+        <label>
+            <input name="toggle" type="radio">
+            <span>1</span>
+        </label>
+        <label>
+            <input name="toggle" type="radio">
+            <span>2</span>
+        </label>
+    </body>
+</html>
