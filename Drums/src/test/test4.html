@@ -8,19 +8,38 @@
             input[type="radio"]:checked ~ span {
                 background:gray;
             }
-            input[type="radio"] ~ span {
-                width: 3em;
+            span::after, span::before{
+                content: " ";
+            }
+            span{
+                display: inline-block;
+                width: 20px;
+                text-align: center;
+                border: 1px solid black;
+            }
+            label:first-child span{
+                border-radius: 5px 0 0 5px;
+            }
+
+            label:last-child span{
+                border-radius: 0 5px 5px 0 ;
             }
         </style>
     </head>
     <body>
-        <label>
-            <input name="toggle" type="radio">
-            <span>1</span>
-        </label>
-        <label>
-            <input name="toggle" type="radio">
-            <span>2</span>
-        </label>
+        <div>
+            <label>
+                <input name="ra" type="radio">
+                <span>1</span>
+            </label>
+            <label>
+                <input name="ra" type="radio">
+                <span>2</span>
+            </label>
+            <label>
+                <input name="ra" type="radio">
+                <span>3</span>
+            </label>
+        </div>
     </body>
 </html>
