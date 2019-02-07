@@ -49,7 +49,7 @@
                                 </label>
                                 <label class="check_value">
                                     <input type="checkbox" :checked='note.value' v-model="note.value"/>
-                                    <span class="check_span" @click="infoNote(index_t, index_b, index_n)"></span>
+                                    <span class="check_span" @click="infoNote(index_t, index_b, index_n)" v-longpress='longPressTest'></span>
                                 </label>
                             </div>   
                         </div>
@@ -101,6 +101,9 @@
             },
             calcNote( note_size, bar_size ){
                 return note_size / bar_size * 100;
+            },
+            longPressTest(){
+                alert('Stop touching me!');
             }
         }  
     };
