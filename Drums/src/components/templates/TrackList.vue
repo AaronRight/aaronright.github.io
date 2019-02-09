@@ -1,7 +1,9 @@
 <template>
     <div>
-    <input type="button" @click="switchZIndex()" value="Checked"/> 
-    <input type="button" @click="uncheck()" value="Uncheck"/> 
+        <div v-if="checked_state" class="uncheck_div" @click="uncheck()">
+            <span>Uncheck</span>    
+        </div>
+       
         <table >
             <thead>
                 <tr>
@@ -45,12 +47,15 @@
                                 v-bind:style="{flex: '0 0 '+ calcNote( note.size, melody[0][index_b].size )+'%'}"
                             > 
                                 <label class="check_check">
-                                    <input type="checkbox" v-model="checked_grid[index_t][index_b][index_n]" :class="{'check_check_checked' : checked_grid[index_t][index_b][index_n]}"/>
+                                    <input type="checkbox" @click="checkedGrid(index_t,index_b,index_n)" :checked="isInCheckedGrid(index_t,index_b,index_n) == true"/>
                                     <span class="check_span"></span>
                                 </label>
                                 <label class="check_value">
                                     <input type="checkbox" :checked='note.value' v-model="note.value"/>
-                                    <span class="check_span" @click="infoNote(index_t, index_b, index_n)" v-longpress='longPressTest'></span>
+                                    <span class="check_span" @click="infoNote(index_t, index_b, index_n)" 
+                                        v-longpress='longPressAction'
+                                        :v-track="index_t" :v-bar="index_b" :v-note="index_n"
+                                        ></span>
                                 </label>
                             </div>   
                         </div>
@@ -85,20 +90,27 @@
         data:  function() {
             return  {
                 checked_state : false,
-                checked_grid: new Array(5).map(() => new Array(10).map(() => new Array(20)))
+                checked_elements: {}
             }          
         },
         methods: {
+            isInCheckedGrid(track,bar,note){
+                return this.checked_elements[track+":"+bar+":"+note];
+            },
+            checkedGrid(track,bar,note){
+                if(this.checked_elements[track+":"+bar+":"+note])
+                    this.checked_elements[track+":"+bar+":"+note] = false;
+                else
+                    this.checked_elements[track+":"+bar+":"+note] = true;
+            },
             switchZIndex(){
                 var global = getCSSRule('.check_check');
-                if (global.style.zIndex < 5) global.style.zIndex = 10;
+                if (this.checked_state) global.style.zIndex = 10;
                 else global.style.zIndex = 0;
             },
             uncheck(){
-                //check_check > check_span
-                for( let checker of document.getElementsByClassName('check_check_checked')){
-                    console.log(checker);
-                }
+                this.checked_elements = {};
+                this.checked_state = false;
                 this.switchZIndex();
             },
             infoNote: function(track, bar, note) {
@@ -111,8 +123,17 @@
             calcNote( note_size, bar_size ){
                 return note_size / bar_size * 100;
             },
-            longPressTest(){
-                alert('Stop touching me!');
+            longPressAction(event){
+                // initialize choosing
+                let target = event.target;
+                this.checked_state = true;
+
+                this.switchZIndex();
+                this.checkedGrid(
+                        target.getAttribute('v-track'),
+                        target.getAttribute('v-bar'),
+                        target.getAttribute('v-note')
+                );
             }
         }  
     };
@@ -133,8 +154,8 @@
         padding: 10px 0px;
         width: 100%;
     }
-    :checked + .check_span {
-        background:rgba(70,70,70,0.5);
+    .check_value :checked + .check_span {
+        background:rgba(70,70,70);
         display:inline-block;
         width: 100%;
     }
@@ -143,8 +164,14 @@
         width: 100%;
     }
 
+    .check_check :checked + .check_span {
+        background:rgba(255,0,0,0.7);
+        display:inline-block;
+        width: 100%;
+    }
+
     .check_check{ 
-        z-index: 10; 
+        z-index: 0; 
         background:rgba(0,0,0,0);
     }
 
@@ -162,7 +189,7 @@
     }
 
     .bar{
-        background: gray;
+        background: lightgrey;
         border: 1px solid black;
         height: 20px;
         width: 300px;
@@ -185,5 +212,15 @@
         box-sizing: border-box;
         padding: 2%;
         */
+    }
+
+    .uncheck_div{
+        color: white;
+        background: black;
+        text-align: center;
+        padding: 5px;
+        position: fixed;
+        top: 0px;
+        width: 100%;
     }
 </style>
