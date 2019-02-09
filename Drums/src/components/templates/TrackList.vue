@@ -1,6 +1,7 @@
 <template>
     <div>
     <input type="button" @click="switchZIndex()" value="Checked"/> 
+    <input type="button" @click="uncheck()" value="Uncheck"/> 
         <table >
             <thead>
                 <tr>
@@ -44,7 +45,7 @@
                                 v-bind:style="{flex: '0 0 '+ calcNote( note.size, melody[0][index_b].size )+'%'}"
                             > 
                                 <label class="check_check">
-                                    <input type="checkbox"/>
+                                    <input type="checkbox" v-model="checked_grid[index_t][index_b][index_n]" :class="{'check_check_checked' : checked_grid[index_t][index_b][index_n]}"/>
                                     <span class="check_span"></span>
                                 </label>
                                 <label class="check_value">
@@ -83,7 +84,8 @@
         ]),
         data:  function() {
             return  {
-                checked_state : false
+                checked_state : false,
+                checked_grid: new Array(5).map(() => new Array(10).map(() => new Array(20)))
             }          
         },
         methods: {
@@ -91,6 +93,13 @@
                 var global = getCSSRule('.check_check');
                 if (global.style.zIndex < 5) global.style.zIndex = 10;
                 else global.style.zIndex = 0;
+            },
+            uncheck(){
+                //check_check > check_span
+                for( let checker of document.getElementsByClassName('check_check_checked')){
+                    console.log(checker);
+                }
+                this.switchZIndex();
             },
             infoNote: function(track, bar, note) {
                 /* 

@@ -39,6 +39,7 @@
                                     :checked="note( $route.params.track,$route.params.bar,$route.params.index).size == c.double_dotted"/>
                                 <span>..</span>
                             </label>
+
                         </li>
                     </ul>
                 </li>
@@ -81,7 +82,7 @@
             div li {
                 position: relative;
                 float: left;
-                width: 40px;
+                width: 30px;
                 margin: 1%;
             }
 
@@ -100,5 +101,21 @@
             li:hover ul {
                 display: block;
                 clear: left;
+            }
+
+            input[type="radio"] {
+                display: none;
+            }
+            input[type="radio"]:checked ~ span {
+                background:gray;
+            }
+            span::after, span::before{
+                content: " ";
+            }
+            span{
+                display: inline-block;
+                width: 30px;
+                text-align: center;
+                border: 1px solid black;
             }
 </style>
