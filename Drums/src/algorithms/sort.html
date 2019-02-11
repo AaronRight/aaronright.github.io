@@ -1,11 +1,15 @@
 <html>
     <head> 
-        <link rel="./sort.css"/>
+        <link rel="stylesheet" href="./sort.css">
         <script src="https://unpkg.com/vue"></script>
     </head>
     <body>
         <div id="app">
-            <input @click="executeBubbleSort()" type="button" value="bubbleSort">
+            <select id="func_sel"> 
+                <option v-for="f in func_arr" :value="f">{{f}}</option>
+            </select>   
+            <input @click="executeSort()" type="button" value="executeSort">
+            
             <div class="array">
                 <div class="block" v-for="i in arr" :style="{height : i*10+'px'}">{{ i }}</div>    
             </div>
