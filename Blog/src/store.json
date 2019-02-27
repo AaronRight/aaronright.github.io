@@ -1,0 +1,41 @@
+{
+    "chapters":[
+        { "id": 1, "name": "Fundamentals", "parent": null },
+        { "id": 2, "name": "Collections", "parent": 1 },
+        { "id": 3, "name": "Algorithms", "parent": 1 },
+        { "id": 4, "name": "Graphics", "parent": null },
+        { "id": 5, "name": "Microcontrollers", "parent": null }
+    ],
+    "topics":[
+        { "id": 1, "name": "Bubble Sort", "parent": 3 },
+        { "id": 2, "name": "Merge Sort", "parent": 3 }
+    ],
+    "references":[
+        {
+            "id": 1,
+            "type": "flowchart",
+            "elements":[
+                { "id":"n1", "type": "terminal", "text": "value>0", "x": 50 , "y":50, "width": 70, "height": 40 },
+                { "id":"n2", "type": "process",  "text": "value--", "x": 0  , "y":100, "width": 70, "height": 40 },
+                { "id":"n3", "text": "value++", "x": 100, "y":100, "width": 70, "height": 40 },
+                { "id":"n4", "type": "decision",  "text": "value", "x": 100, "y":200, "width": 70, "height": 40 },
+                { "id":"n5", "type": "io",  "text": "value", "x": 0, "y":200, "width": 70, "height": 40 }
+            ],
+            "edges":[
+                { "id":"e1", "text": "Yes", "elements": [ 
+                    { "element":"n1", "side":"left"}, 
+                    { "element":"n2", "side":"top"}] },
+                { "id":"e2", "text": "No", "elements": [ 
+                    { "element":"n1", "side":"right"}, 
+                    { "element":"n3", "side":"top"}]  },
+                { "id":"e3", "text": "No", "elements": [ 
+                    { "element":"n3", "side":"bottom"}, 
+                    { "element":"n4", "side":"top"}]  },
+                { "id":"e4", "text": "No", "elements": [ 
+                    { "element":"n3", "side":"bottom"}, 
+                    { "element":"n5", "side":"top"}]  }
+                
+            ]
+        }
+    ]
+}
