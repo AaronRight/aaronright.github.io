@@ -3,7 +3,9 @@
         <svg :style="{height:'800px'}">
           <g>
             <element_ v-for="c in getElements()" :key="c.id" :type="c.type" 
-          :x="c.x" :y="c.y" :width="c.width" :height="c.height" :text="c.text" ></element_>
+          :x="c.x" :y="c.y" :width="c.width" :height="c.height">
+              {{c.text}}
+            </element_>
             
             <edge_ v-for="c in getEdges()" :key="c.id" :type="c.type" :text="c.text" 
               :xy="getEdge(c)"></edge_>
