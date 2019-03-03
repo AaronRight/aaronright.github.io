@@ -22,19 +22,10 @@
                 { "id":"n5", "type": "io",  "text": "value", "x": 0, "y":200, "width": 70, "height": 40 }
             ],
             "edges":[
-                { "id":"e1", "text": "Yes", "elements": [ 
-                    { "element":"n1", "side":"left"}, 
-                    { "element":"n2", "side":"top"}] },
-                { "id":"e2", "text": "No", "elements": [ 
-                    { "element":"n1", "side":"right"}, 
-                    { "element":"n3", "side":"top"}]  },
-                { "id":"e3", "text": "No", "elements": [ 
-                    { "element":"n3", "side":"bottom"}, 
-                    { "element":"n4", "side":"top"}]  },
-                { "id":"e4", "text": "No", "elements": [ 
-                    { "element":"n3", "side":"bottom"}, 
-                    { "element":"n5", "side":"top"}]  }
-                
+                { "id":"e1", "text": "Yes", "elements": [ "n1", "n2"] },
+                { "id":"e2", "text": "No", "elements": [ "n1", "n3" ]  },
+                { "id":"e3", "text": "No", "elements": [ "n3", "n4"], "points": [ [180,40], [180,90] ]  },
+                { "id":"e4", "text": "No", "elements": [ "n3", "n5"]  }
             ]
         }
     ]
