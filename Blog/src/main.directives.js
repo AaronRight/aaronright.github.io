@@ -1,19 +1,16 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 
 var grab = { 
-    chosen : false,
-    z_index : 0
+    chosen : false
 }
 
 function mousedown (e, el) {  
     grab.chosen = true;
-    grab.z_index = el.style.zIndex;
-    el.style.zIndex = 15000;
 }
 
 function mouseup (e, el) { 
     grab.chosen = false; 
-    el.style.zIndex = grab.z_index;
 }
 
 function mousemove (e, el) {
@@ -29,6 +26,7 @@ function mousemove (e, el) {
 
         figure.setAttribute('x', new_x ); figure.setAttribute('y', new_y  );
         text.setAttribute('x',  new_x  ); text.setAttribute('y', new_y  );
+    
     }
 }
 

@@ -8,9 +8,10 @@ Vue.use(VueRouter);
 import { v_store } from './main.vuex'
 import { v_router } from './main.router'
 import { createDirectives } from './main.directives'
-createDirectives();
+
 const router = v_router()
 const store = v_store();
+createDirectives();
 
 import { Blog } from './blog';
 import { FlowChart } from './flowchart';
@@ -20,5 +21,5 @@ new Vue({
   el: '#app',
   store,
   router,
-  render: h => h(FlowChart)
+  render: h => h(FlowChartEditor)
 });

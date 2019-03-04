@@ -1,5 +1,5 @@
 <template>
-  <g>
+  <g >
    
       <template v-if="type == 'terminal'">
          <rect  :x=(x-width/2) :y=(y-height/2) :width=width :height=height rx=5 ry=5 fill="white"/>

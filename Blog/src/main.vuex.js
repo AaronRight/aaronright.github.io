@@ -4,7 +4,8 @@ import data_store from './store.json';
 export function v_store(){
     return new Vuex.Store({
             state: {
-                data: data_store
+                data: data_store,
+                flowchart: { elements:[], edges:[] }
             },
             getters: {
                 chapters: (state) => (parent_id = null) => {
@@ -51,6 +52,17 @@ export function v_store(){
                     for ( let current of ref['elements'] ){
                         if ( current['id'] == element_id )
                             return current;
+                    }
+                },
+                newFlowChart: (state) =>{
+                    return state.flowchart;
+                },
+                newFlowChartElement: (state) => (id, x, y) => {
+                    for( let element of state.flowchart ){
+                        if(element.id == id){
+                            element.x = x;
+                            element.y = y;
+                        }
                     }
                 }
             }
