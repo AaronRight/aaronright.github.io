@@ -26,7 +26,6 @@ function mousemove (e, el) {
 
         figure.setAttribute('x', new_x ); figure.setAttribute('y', new_y  );
         text.setAttribute('x',  new_x  ); text.setAttribute('y', new_y  );
-    
     }
 }
 
