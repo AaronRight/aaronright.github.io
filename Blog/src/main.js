@@ -14,12 +14,11 @@ const store = v_store();
 createDirectives();
 
 import { Blog } from './blog';
-import { FlowChart } from './flowchart';
-import { FlowChartEditor } from './flowchart';
+import  FlowChart  from './flowchart2/FlowChart.vue';
 
 new Vue({
   el: '#app',
   store,
   router,
-  render: h => h(FlowChartEditor)
+  render: h => h(FlowChart)
 });
