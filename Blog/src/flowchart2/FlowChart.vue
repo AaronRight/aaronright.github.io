@@ -29,7 +29,22 @@
         </div>
 
         <div v-if="edit" id="property_panel">
-          
+          <template v-if="false/* property of node */">
+            <select>
+              <option v-for="type of types" > {{ type }}</option>
+            </select>
+            <input type="text" placeholder="text">
+            <br>
+            <input type="number" placeholder="x">
+            <input type="number" placeholder="y">
+            <input type="number" placeholder="width">
+            <input type="number" placeholder="height">
+          </template>
+          <template v-else-if="true/* property of edge */">
+            <input type="text" placeholder="text">
+            <button>Add joint</button>
+            <input type="checkbox" placeholder="Show arrow">
+          </template>
         </div>
 
         <svg id="canvas" 
@@ -49,7 +64,7 @@
             </template>
 <!-- Edges -->
             <template v-for="edge of flowchart.edges">
-              <polyline points="1,1"></polyline>
+              <polyline :points="createEdgePoints(edge)" :key="edge.id" stroke="black" stroke-width="1.5"></polyline>
             </template>
 
 <!-- Elements -->
@@ -128,6 +143,11 @@
                     /> 
                 </template>
             </template>
+
+            <!-- Pointer -->
+            <rect :x="Number(edge_mode_pointer_x)-5" :y="Number(edge_mode_pointer_y)-5" width=10 height=10 rx=5 ry=5 fill="white" stroke="black" stroke-dasharray="3" />
+            <line v-if="edge_mode_current_element!= null" :x1=edge_mode_current_element.x :y1=edge_mode_current_element.y 
+              :x2="Number(edge_mode_pointer_x)" :y2="Number(edge_mode_pointer_y)" stroke="black" stroke-dasharray="3"></line> 
           </g>
         </svg>
     </div>
@@ -138,16 +158,19 @@
     props: {
       width: { type: Number, default: 480 },
       height: { type: Number, default: 480 },
-      edit: { type: Boolean, default: true }
+      edit: { type: Boolean, default: true },
+      flowchart: { default :{ elements:[], edges:[] }},
     },
     data() {
       return {
-        flowchart: { elements:[], edges:[] },
         types: ['terminal', 'process','io', 'decision', 'default'],
         grab: false,
         choosen_coords: [0,0],
         choosen_id: 0,
-        edge_mode: false
+        edge_mode: false,
+        edge_mode_pointer_x : -100,
+        edge_mode_pointer_y : -100,
+        edge_mode_current_element: null
       };
     },methods: {
         createRulePoints(length, is_horizontal = true, step = 5, size_small = 2, size_big = 4){
@@ -172,17 +195,51 @@
           result.push([this.choosen_coords[0],0])
           return result.join(' ')
         },
-        createElement(type){
+        createEdgePoints: function(edge){
+          let result = [];
+          let currentElements = [ {}, {} ];
+
+          for ( let element of this.flowchart.elements ){
+            if (  element.id == edge['elements'][0] )
+              currentElements[0] = element;
+            if (  element.id == edge['elements'][1] )
+              currentElements[1] = element;
+          }
+          
+          result.push( [ currentElements[0]['x'], currentElements[0]['y'] ]);
+          result = result.concat(edge.points);
+          result.push( [ currentElements[1]['x'],  currentElements[1]['y'] ]);
+          
+          return result.join(' ');
+      },
+        createElement(type, x=50, y=50){
+            let result = {};
+            result.id = "n" + Math.floor(Math.random() * 1000);
+            result.type = type;
+            result.text = "default";
+            result.x = x;
+            result.y = y;
+            result.width = result.height = "25";
+            this.flowchart.elements.push(result);
+            return result;
+        },
+        createEdge(type){
+            if(this.edge_mode) {
+              this.edge_mode = false;
+              /* hide pointer */
+              this.edge_mode_pointer_x = -100;
+              this.edge_mode_pointer_y = -100;
+              this.edge_mode_current_element = null;
+            }
+            else this.edge_mode = true;
+        },
+        createJoin(){
             let result = {};
             result.id = "n" + Math.floor(Math.random() * 1000);
             result.type = type;
             result.text = "default";
             result.x = result.y = result.width = result.height = "50";
             this.flowchart.elements.push(result);
-        },
-        createEdge(type){
-            if(this.edge_mode) this.edge_mode = false;
-            else this.edge_mode = true;
         },
         click(){
           console.log(this.flowchart);
@@ -194,10 +251,31 @@
         },
         canvasmouseclick(e){ 
           e.preventDefault();
-          console.log(e);
+          if(e.button == 0) /* left click to create new line or its first point */
+            if(this.edge_mode_current_element == null){
+              this.edge_mode_current_element = this.createElement('default', this.edge_mode_pointer_x, this.edge_mode_pointer_y);
+            } else {
+              let result = {}
+              result.id = "e" + Math.floor(Math.random() * 1000);
+              result.text = "default";
+              result.elements = [];
+              result.elements.push( this.edge_mode_current_element.id );
+              this.edge_mode_current_element = this.createElement('default', this.edge_mode_pointer_x, this.edge_mode_pointer_y);
+              result.elements.push( this.edge_mode_current_element.id );
+              this.flowchart.edges.push(result);
+            }
+          else /* right click to prevent creation of new line*/
+            this.edge_mode_current_element = null;
         },
         canvasmousemove (e) {
-          //console.log(e);
+          if(!this.edge_mode) return;
+
+          let pt =  document.getElementById('canvas').createSVGPoint();
+          pt.x = e.pageX;  pt.y = e.pageY;
+          pt = pt.matrixTransform(e.target.getScreenCTM().inverse());
+          
+          this.edge_mode_pointer_x = pt.x
+          this.edge_mode_pointer_y = pt.y
         },
         mouseclick (e){ 
           this.choosen_coords = [0, 0];
