@@ -1,16 +1,37 @@
 <template>
-      <polyline :points="xy"></polyline>
+    <svg>
+        <polyline :points="createEdgePoints(edge)" stroke="black" stroke-width="1.5"></polyline>
+    </svg>
 </template>
+<script>
+export default {
+    props: ['edge', 'flowchart'],
+    data() {
+      return {
+        
+      };
+    },
+    methods:{
+        createEdgePoints: function(edge){
+          let result = [];
+          let currentElements = [ {}, {} ];
 
-<script>    
-  export default {
-    props: [ 'xy' ]
-  };
+          for ( let element of this.flowchart.elements ){
+            if (  element.id == edge['elements'][0] )
+              currentElements[0] = element;
+            if (  element.id == edge['elements'][1] )
+              currentElements[1] = element;
+          }
+          
+          result.push( [ currentElements[0]['x'], currentElements[0]['y'] ]);
+          result = result.concat(edge.points);
+          result.push( [ currentElements[1]['x'],  currentElements[1]['y'] ]);
+          
+          return result.join(' ');
+        }
+    }
+}
 </script>
-
 <style>
-  svg{
-    fill:none;
-    stroke:black;
-  }
+
 </style>

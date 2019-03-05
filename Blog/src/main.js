@@ -14,7 +14,7 @@ const store = v_store();
 createDirectives();
 
 import { Blog } from './blog';
-import  FlowChart  from './flowchart2/FlowChart.vue';
+import FlowChart from './flowchart/FlowChart.vue';
 
 new Vue({
   el: '#app',
