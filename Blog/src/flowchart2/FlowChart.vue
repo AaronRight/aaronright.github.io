@@ -16,11 +16,12 @@
           <button @click="createElement('default')">
             <svg> <rect x=1 y=1 width=14 height=14 rx=7 ry=7 fill="none" stroke="black"/> </svg>
           </button>
-          <button @click="createElement('edge')">
+          <button @click="createEdge('edge')">
             <svg> 
+              <rect v-if="edge_mode" x=0 y=0 width=16 height=16 rx=5 ry=5 fill="none" stroke="red"/>  
               <rect x=1 y=4.5 width=3 height=3 rx=5 ry=5 fill="none" stroke="black"/>
-              <rect x=12 y=10 width=3 height=3 rx=5 ry=5 fill="none" stroke="black"/>
-              <line x1=3.4 y1=6.5 x2=12 y2=10.5 stroke="black"></line>
+              <rect x=12 y=9 width=3 height=3 rx=5 ry=5 fill="none" stroke="black"/>
+              <line x1=3.4 y1=6.5 x2=12 y2=9.5 stroke="black"></line>
             </svg>
           </button>
 
@@ -31,7 +32,10 @@
           
         </div>
 
-        <svg id="canvas">
+        <svg id="canvas" 
+          @click="edit ? canvasmouseclick($event) : ''" 
+          @contextmenu="edit ? canvasmouseclick($event) : ''"
+          @mousemove="edit ? canvasmousemove($event) : ''" >
           <g>
             <template v-if="edit">
               <polyline :points="createRulePoints( 2000 )"
@@ -44,18 +48,18 @@
               <polyline :points="createRayPoints()" style="fill:none; stroke:black; stroke-width:0.5; stroke-dasharray:5;" />
             </template>
 <!-- Edges -->
-            <template v-for="element of flowchart.edges">
+            <template v-for="edge of flowchart.edges">
               <polyline points="1,1"></polyline>
             </template>
 
 <!-- Elements -->
             <template v-for="element of flowchart.elements">
                 <template v-if="element.type == 'terminal'">
-                    <rect v-if="element.id == choosen_id"             
+                    <rect v-if="element.id == choosen_id" :key="element.id+'cho'"            
                       :x=(element.x-element.width/2-3) :y=(element.y-element.height/2-3) 
                       :width=(Number(element.width)+6) :height=(Number(element.height)+6) rx=5 ry=5 fill="none" stroke="red"  stroke-dasharray="5"
                     />
-                    <rect  :id="element.id"
+                    <rect  :id="element.id" :key="element.id"
                       @mousedown="edit ? mousedown($event) : ''" @mouseout="edit ? mouseup($event): ''"
                       @mouseup="edit ? mouseup($event) : ''" @mousemove="edit ? mousemove($event) : ''"
                       @click="edit ? mouseclick($event) : ''"
@@ -64,11 +68,11 @@
                     />
                 </template>
                 <template v-else-if="element.type == 'process'">
-                  <rect v-if="element.id == choosen_id"             
+                  <rect v-if="element.id == choosen_id"  :key="element.id+'cho'"           
                       :x=(element.x-element.width/2-3) :y=(element.y-element.height/2-3) 
                       :width=(Number(element.width)+6) :height=(Number(element.height)+6) fill="none" stroke="red"  stroke-dasharray="5"
                     />
-                    <rect  :id="element.id"
+                    <rect  :id="element.id" :key="element.id"
                       @mousedown="mousedown($event)" @mouseout="mouseup($event)"
                       @mouseup="mouseup($event)" @mousemove="mousemove($event)"
                       @click="mouseclick($event)"
@@ -77,14 +81,14 @@
                     />
                 </template>
                 <template v-else-if="element.type == 'io'">
-                  <polygon v-if="element.id == choosen_id"
+                  <polygon v-if="element.id == choosen_id" :key="element.id+'cho'"
                     :points="[  [Number(element.x)-Number(element.width)/2+15-3,Number(element.y)-Number(element.height)/2-3],
                       [Number(element.x)-Number(element.width)/2+15+Number(element.width)+3,Number(element.y)-Number(element.height)/2-3],
                       [Number(element.x)-Number(element.width)/2+Number(element.width)+3,Number(element.y)+Number(element.height)/2+3],
                       [Number(element.x)-Number(element.width)/2-3,Number(element.y)+Number(element.height)/2+3] ].join(' ')" fill="none" stroke="red"  stroke-dasharray="5"
                   /> 
                   <polygon 
-                    :id="element.id" @click="mouseclick($event)"
+                    :id="element.id" @click="mouseclick($event)" :key="element.id"
                       @mousedown="mousedown($event)" @mouseout="mouseup($event)"
                       @mouseup="mouseup($event)" @mousemove="mousemove($event)"
                     :points="[  [Number(element.x)-Number(element.width)/2+15,Number(element.y)-Number(element.height)/2],
@@ -94,14 +98,14 @@
                   /> 
                 </template> 
                 <template v-else-if="element.type == 'decision'">
-                  <polygon v-if="element.id == choosen_id"
+                  <polygon v-if="element.id == choosen_id" :key="element.id+'cho'"
                     :points="[  [Number(element.x)-Number(element.width)/2-15-4,Number(element.y)], 
                                         [Number(element.x),Number(element.y)-Number(element.height)/2-3], 
                                         [Number(element.x)+Number(element.width)/2+15+4,Number(element.y)], 
                                         [Number(element.x),Number(element.y)+Number(element.height)/2+3]  ].join(' ')"  fill="none" stroke="red"  stroke-dasharray="5"
                   />
                   <polygon 
-                    :id="element.id" @click="mouseclick($event)"
+                    :id="element.id" @click="mouseclick($event)" :key="element.id"
                       @mousedown="mousedown($event)" @mouseout="mouseup($event)"
                       @mouseup="mouseup($event)" @mousemove="mousemove($event)"
                     :points="[  [Number(element.x)-Number(element.width)/2-15,element.y], 
@@ -111,11 +115,11 @@
                   /> 
                 </template>
                 <template v-else>
-                  <rect v-if="element.id == choosen_id"             
+                  <rect v-if="element.id == choosen_id"   :key="element.id+'cho'"           
                       :x=(element.x-element.width/2-3) :y=(element.y-element.height/2-3) 
                       :width=(Number(element.width)+6) :height=(Number(element.height)+6) rx=50 ry=50 fill="none" stroke="red"  stroke-dasharray="5"
                     />
-                    <rect  :id="element.id"
+                    <rect  :id="element.id" :key="element.id"
                       @mousedown="mousedown($event)" @mouseout="mouseup($event)"
                       @mouseup="mouseup($event)" @mousemove="mousemove($event)"
                       @click="mouseclick($event)"
@@ -142,7 +146,8 @@
         types: ['terminal', 'process','io', 'decision', 'default'],
         grab: false,
         choosen_coords: [0,0],
-        choosen_id: 0
+        choosen_id: 0,
+        edge_mode: false
       };
     },methods: {
         createRulePoints(length, is_horizontal = true, step = 5, size_small = 2, size_big = 4){
@@ -175,6 +180,10 @@
             result.x = result.y = result.width = result.height = "50";
             this.flowchart.elements.push(result);
         },
+        createEdge(type){
+            if(this.edge_mode) this.edge_mode = false;
+            else this.edge_mode = true;
+        },
         click(){
           console.log(this.flowchart);
         },
@@ -183,10 +192,18 @@
           info_panel.innerHTML = [e.screenX, e.screenY]
 
         },
+        canvasmouseclick(e){ 
+          e.preventDefault();
+          console.log(e);
+        },
+        canvasmousemove (e) {
+          //console.log(e);
+        },
         mouseclick (e){ 
           this.choosen_coords = [0, 0];
           this.choosen_id = e.target.id;
           this.updatePropertiesInfo(e);
+          e.stopPropagation();
         },
         mousedown (e){ 
           this.grab = true;
@@ -209,6 +226,7 @@
                 }
               }
           }
+          e.stopPropagation();
         }
 
     }
