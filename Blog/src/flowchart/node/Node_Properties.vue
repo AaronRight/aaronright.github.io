@@ -9,6 +9,7 @@
         <input type="number" placeholder="y" v-model="node.y">
         <input type="number" placeholder="width" v-model="node.width">
         <input type="number" placeholder="height" v-model="node.height">
+         <button>delete</button>
     </div>
 </template>
 <script>

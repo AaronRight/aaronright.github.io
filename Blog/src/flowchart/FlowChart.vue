@@ -6,11 +6,11 @@
             <u-button v-for="type of types" :key="type+'_button'" :icon="type" :action="function(){ return setType(type); }" :checked="edge_params.type == type"></u-button>
           </div>
 
-          <button @click="click()">Click</button>
+          <button @click="print()">print</button>
 
           <template v-if="params.choosen!=null">
             <node-properties v-if="params.choosen.type!='edge'" :node="params.choosen" :types="types"></node-properties>
-            <edge-properties v-else :edge="params.choosen"></edge-properties>
+            <edge-properties v-else :edge="params.choosen" :flowchart="flowchart"></edge-properties>
           </template>
         </div>
         
@@ -43,8 +43,8 @@
 import uButton from './utility/Button.vue';
 import Rule from './utility/Rule.vue';
 import Node from './node/Node.vue';
-import NodeProperties from './node/Node_Properties.vue';
 import Edge from './edge/Edge.vue';
+import NodeProperties from './node/Node_Properties.vue';
 import EdgeProperties from './edge/Edge_Properties.vue';
 
   export default {
@@ -111,7 +111,7 @@ import EdgeProperties from './edge/Edge_Properties.vue';
             result.elements.push( this.edge_params.current_element.id );
             this.flowchart.edges.push(result);
         },
-        click(){
+        print(){
           console.log(this.flowchart);
         },
         canvasmouseclick(e){ 
@@ -149,11 +149,9 @@ import EdgeProperties from './edge/Edge_Properties.vue';
   border:1px solid white;
   float: left;
 }
-
 #canvas{
   border: 1px solid black;
   width: 640px;
   height: 480px;
 }
-
 </style>
