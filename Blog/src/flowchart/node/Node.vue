@@ -69,7 +69,6 @@ export default {
           this.params.choosen_coords = [0, 0];
           this.params.choosen = this.node;
           this.params.choosen_type=='node'
-          //this.updatePropertiesInfo(e);
           e.stopPropagation();
         },
         mousedown (e){ this.params.grab = true; }, 
