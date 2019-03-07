@@ -25,7 +25,7 @@
             <edge v-for="edge of flowchart.edges" :key="edge.id" :edge="edge" :flowchart="flowchart"></edge>
 
             <node v-for="node of flowchart.elements" :key="node.id" :node="node" :canvas="$refs.canvas" 
-              :selected="params.choosen_id==node.id" :params="params" :edit="edit"></node>
+              :selected="params.choosen == null ? false : params.choosen.id==node.id" :params="params" :edit="edit"></node>
 
             <!-- Pointer -->
             <node :manual="true" :node_params="{  x : edge_params.pointer_x, y: edge_params.pointer_y, width: 25, height: 25, type: edge_params.type }"></node>
@@ -57,7 +57,6 @@ import EdgeProperties from './edge/Edge_Properties.vue';
         params: {
           grab: false,
           choosen_coords:[0,0],
-          choosen_id: 0,
           choosen: null,
           choosen_type: 'node'
         },

@@ -67,8 +67,8 @@ export default {
 
         mouseclick (e){ 
           this.params.choosen_coords = [0, 0];
-          this.params.choosen_id = this.node.id;
           this.params.choosen = this.node;
+          this.params.choosen_type=='node'
           //this.updatePropertiesInfo(e);
           e.stopPropagation();
         },
