@@ -5,4 +5,4 @@ import NodeProperties from "./node/Node_Properties.vue";
 import Edge from "./edge/Edge.vue";
 import EdgeProperties from "./edge/Edge_Properties.vue";
 
-export { FlowChart }
+export { FlowChart, NodeProperties, EdgeProperties }

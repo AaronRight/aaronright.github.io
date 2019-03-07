@@ -1,7 +1,7 @@
 <template>
     <div>
         <select>
-            <option v-for="type of types" > {{ type }}</option>
+            <option v-for="type of types" :key="'t_'+type"> {{ type }}</option>
         </select>
         <input type="text" placeholder="text">
         <br>

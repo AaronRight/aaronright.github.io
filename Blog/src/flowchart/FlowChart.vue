@@ -1,12 +1,18 @@
 <template>
     <div>
-        <div v-if="edit" class="button_panel"> 
-          <u-button v-for="type of types" :key="type+'_button'" :icon="type" :action="function(){ return setType(type); }"></u-button>
-          <u-button icon="edge" :action="function(){ return createEdge('edge'); }" signal="square" :checked="edge_params.mode"></u-button>
-          <button @click="click()">Click</button>
-        </div>
+        <div v-if="edit" id="edit_panel">
+          <div> 
+            <u-button class="main_button" icon="edge" size='big' :action="function(){ return createEdge('edge'); }" signal="square" :checked="edge_params.mode"></u-button>
+            <u-button v-for="type of types" :key="type+'_button'" :icon="type" :action="function(){ return setType(type); }" :checked="edge_params.type == type"></u-button>
+          </div>
 
-        <div v-if="edit" id="property_panel"></div>
+          <button @click="click()">Click</button>
+
+          <router-view>
+           
+          </router-view>
+        </div>
+        
         <svg id="canvas" ref="canvas"
           @click="edit ? canvasmouseclick($event) : ''" 
           @contextmenu="edit ? canvasmouseclick($event) : ''"
@@ -93,6 +99,7 @@ import Edge from './edge/Edge.vue';
         },
         click(){
           console.log(this.flowchart);
+          this.$router.push('/node/1')
         },
         canvasmouseclick(e){ 
           e.preventDefault();
@@ -127,15 +134,12 @@ import Edge from './edge/Edge.vue';
 </script>
 
 <style>
-button svg {
-  width: 16px;
-  height: 16px;
-}
-#property_panel{
+#edit_panel{
   width: 150px;
-  float: left;
   border:1px solid white;
+  float: left;
 }
+
 #canvas{
   border: 1px solid black;
   width: 640px;
