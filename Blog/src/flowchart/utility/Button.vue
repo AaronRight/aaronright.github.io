@@ -23,7 +23,7 @@
               </template>
 
               <template v-if="checked">
-                  <circle v-if="signal == 'point'" cx=3 cy=3 r=2 stroke="red" fill="red"></circle>  
+                  <circle v-if="signal == 'point'" cx=3 cy=3 r=2 stroke="black" stroke-width="0.1" fill="red"></circle>  
                   <rect v-else x=1 y=1 width=14 height=14 rx=3 ry=3 stroke="red" stroke-width="0.5"></rect>
               </template>
         </svg>

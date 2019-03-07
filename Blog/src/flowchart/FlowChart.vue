@@ -8,9 +8,10 @@
 
           <button @click="click()">Click</button>
 
-          <router-view>
-           
-          </router-view>
+          <template v-if="params.choosen!=null">
+            <node-properties v-if="params.choosen_type=='node'" :node="params.choosen" :types="types"></node-properties>
+            <edge-properties v-else :edge="params.choosen"></edge-properties>
+          </template>
         </div>
         
         <svg id="canvas" ref="canvas"
@@ -24,7 +25,7 @@
             <edge v-for="edge of flowchart.edges" :key="edge.id" :edge="edge" :flowchart="flowchart"></edge>
 
             <node v-for="node of flowchart.elements" :key="node.id" :node="node" :canvas="$refs.canvas" 
-              :selected="params.choosen_id==node.id" :params="params"></node>
+              :selected="params.choosen_id==node.id" :params="params" :edit="edit"></node>
 
             <!-- Pointer -->
             <node :manual="true" :node_params="{  x : edge_params.pointer_x, y: edge_params.pointer_y, width: 25, height: 25, type: edge_params.type }"></node>
@@ -39,7 +40,9 @@
 import uButton from './utility/Button.vue';
 import Rule from './utility/Rule.vue';
 import Node from './node/Node.vue';
+import NodeProperties from './node/Node_Properties.vue';
 import Edge from './edge/Edge.vue';
+import EdgeProperties from './edge/Edge_Properties.vue';
 
   export default {
     props: {
@@ -54,7 +57,9 @@ import Edge from './edge/Edge.vue';
         params: {
           grab: false,
           choosen_coords:[0,0],
-          choosen_id: 0
+          choosen_id: 0,
+          choosen: null,
+          choosen_type: 'node'
         },
         edge_params:{
           type: 'default',
@@ -69,6 +74,8 @@ import Edge from './edge/Edge.vue';
     components:{
       'node' : Node,
       'edge' : Edge,
+      'node-properties' : NodeProperties,
+      'edge-properties' : EdgeProperties,
       'u-button' : uButton,
       'rule' : Rule
     },
@@ -99,7 +106,6 @@ import Edge from './edge/Edge.vue';
         },
         click(){
           console.log(this.flowchart);
-          this.$router.push('/node/1')
         },
         canvasmouseclick(e){ 
           e.preventDefault();

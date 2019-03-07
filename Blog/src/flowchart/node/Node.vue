@@ -4,7 +4,6 @@
         @mouseup=" edit ? mouseup($event): ''" @mousemove=" edit ? mousemove($event) : ''"
         :class="manual ? 'selection' : ''"
         >
-
         <template v-if="ntype() == 'terminal'">
             <rect v-if="selected" class="selection"  :x=(nx()-nw()/2-3) :y=(ny()-nh()/2-3)  :width=(nw()+6) :height=(nh()+6) rx=5 ry=5 />
             <rect  class="main" :x=(nx()-nw()/2) :y=(ny()-nh()/2)  :width=nw() :height=nh() rx=5 ry=5  />
@@ -69,6 +68,7 @@ export default {
         mouseclick (e){ 
           this.params.choosen_coords = [0, 0];
           this.params.choosen_id = this.node.id;
+          this.params.choosen = this.node;
           //this.updatePropertiesInfo(e);
           e.stopPropagation();
         },

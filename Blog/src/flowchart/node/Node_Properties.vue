@@ -1,22 +1,26 @@
 <template>
     <div>
-        <select>
+        <select v-model="node.type">
             <option v-for="type of types" :key="'t_'+type"> {{ type }}</option>
         </select>
-        <input type="text" placeholder="text">
+        <input type="text" placeholder="text" v-model="node.text">
         <br>
-        <input type="number" placeholder="x">
-        <input type="number" placeholder="y">
-        <input type="number" placeholder="width">
-        <input type="number" placeholder="height">
+        <input type="number" placeholder="x" v-model="node.x">
+        <input type="number" placeholder="y" v-model="node.y">
+        <input type="number" placeholder="width" v-model="node.width">
+        <input type="number" placeholder="height" v-model="node.height">
     </div>
 </template>
 <script>
 export default {
-    
+    props: ['node', 'types'],
 }
 </script>
-<style>
-
+<style scoped>
+    div{    
+        width: 100%;
+        height: 100%;
+        margin: 5px;
+    }
 </style>
 
