@@ -127,7 +127,7 @@ import EdgeProperties from './edge/Edge_Properties.vue';
         canvasmousemove (e) {
           if(!this.edge_params.mode) return;
 
-          let pt =  document.getElementById('canvas').createSVGPoint();
+          let pt =  $refs.canvas.createSVGPoint();
           pt.x = e.pageX;  pt.y = e.pageY;
           pt = pt.matrixTransform(e.target.getScreenCTM().inverse());
           
