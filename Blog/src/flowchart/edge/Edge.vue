@@ -1,11 +1,11 @@
 <template>
-    <svg>
-        <polyline :points="createEdgePoints(edge)" stroke="black" stroke-width="1.5"></polyline>
+    <svg @click=" edit ? mouseclick($event) : ''">
+        <polyline :points="createEdgePoints(edge)" stroke="black" stroke-width="3"></polyline>
     </svg>
 </template>
 <script>
 export default {
-    props: ['edge', 'flowchart'],
+    props: ['edge', 'flowchart', 'edit', 'params'],
     data() {
       return {
         
@@ -28,7 +28,12 @@ export default {
           result.push( [ currentElements[1]['x'],  currentElements[1]['y'] ]);
           
           return result.join(' ');
-        }
+        },
+        mouseclick (e){ 
+          this.params.choosen = this.edge;
+          this.params.choosen_type='edge'
+          e.stopPropagation();
+        },
     }
 }
 </script>

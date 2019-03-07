@@ -22,7 +22,7 @@
           <g>
             <rule v-if="edit" :grab="params.grab" :choosen_coords="params.choosen_coords" />
 
-            <edge v-for="edge of flowchart.edges" :key="edge.id" :edge="edge" :flowchart="flowchart"></edge>
+            <edge v-for="edge of flowchart.edges" :key="edge.id" :edge="edge" :flowchart="flowchart" :params="params" :edit="edit"></edge>
 
             <node v-for="node of flowchart.elements" :key="node.id" :node="node" :canvas="$refs.canvas" 
               :selected="params.choosen == null ? false : params.choosen.id==node.id" :params="params" :edit="edit"></node>
