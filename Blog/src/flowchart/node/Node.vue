@@ -1,16 +1,14 @@
 <template>
     <svg @click=" edit ? mouseclick($event) : ''" 
-        @mousedown=" edit ? mousedown($event) : ''" @mouseout=" edit ? mouseup($event): ''"
-        @mouseup=" edit ? mouseup($event): ''" @mousemove=" edit ? mousemove($event) : ''"
-        :class="manual ? 'selection' : ''"
+        @mousedown=" edit ? mousedown($event) : ''"
         >
         <template v-if="ntype() == 'terminal'">
             <rect v-if="selected" class="selection"  :x=(nx()-nw()/2-3) :y=(ny()-nh()/2-3)  :width=(nw()+6) :height=(nh()+6) rx=5 ry=5 />
-            <rect  class="main" :x=(nx()-nw()/2) :y=(ny()-nh()/2)  :width=nw() :height=nh() rx=5 ry=5  />
+            <rect  :class="manual ? 'manual' : 'main'" :x=(nx()-nw()/2) :y=(ny()-nh()/2)  :width=nw() :height=nh() rx=5 ry=5  />
         </template>
         <template v-else-if="ntype() == 'process'">
             <rect v-if="selected" class="selection"  :x=(nx()-nw()/2-3) :y=(ny()-nh()/2-3)  :width=(nw()+6) :height=(nh()+6) />
-            <rect class="main" :x=(nx()-nw()/2) :y=(ny()-nh()/2) :width=nw() :height=nh() />
+            <rect :class="manual ? 'manual' : 'main'" :x=(nx()-nw()/2) :y=(ny()-nh()/2) :width=nw() :height=nh() />
         </template>
         <template v-else-if="ntype() == 'io'">
             <polygon v-if="selected" class="selection"  
@@ -19,7 +17,7 @@
                     [nx()-nw()/2+nw()+3 , ny()+nh()/2+3],
                     [nx()-nw()/2-3 , ny()+nh()/2+3] ].join(' ')" 
             /> 
-            <polygon class="main"
+            <polygon :class="manual ? 'manual' : 'main'"
                 :points="[  [nx()-nw()/2+15 , ny()-nh()/2],
                     [nx()-nw()/2+15+nw() , ny()-nh()/2],
                     [nx()-nw()/2+nw() , ny()+nh()/2],
@@ -33,7 +31,7 @@
                     [nx()+nw()/2+15+4,ny()], 
                     [nx(),ny()+nh()/2+3] ].join(' ')"
             />
-            <polygon class="main"
+            <polygon :class="manual ? 'manual' : 'main'"
                 :points="[  [nx()-nw()/2-15,ny()], 
                     [nx(),ny()-nh()/2], 
                     [nx()+nw()/2+15,ny()], 
@@ -42,7 +40,7 @@
         </template>
         <template v-else>
             <rect v-if="selected" class="selection" :x=(nx()-nw()/2-3) :y=(ny()-nh()/2-3)  :width=(nw()+6) :height=(nh()+6) rx=50 ry=50  />
-            <rect class="main" :x=(nx()-nw()/2) :y=(ny()-nh()/2)  :width=nw() :height=nh() rx=50 ry=50  /> 
+            <rect :class="manual ? 'manual' : 'main'" :x=(nx()-nw()/2) :y=(ny()-nh()/2)  :width=nw() :height=nh() rx=50 ry=50  /> 
         </template>
     </svg>
 </template>
@@ -56,7 +54,8 @@ export default {
         edit: { type: Boolean, default: false },
         /* manual params */
         manual: { type: Boolean, default: false },
-        node_params: { type: Object, default: null }
+        node_params: { type: Object, default: null },
+        edge_params: { type: Object }
     },
     methods:{
         nw(){ if(this.manual)  return Number(this.node_params.width); else return Number(this.node.width); },
@@ -66,26 +65,13 @@ export default {
         ntype(){ if(this.manual) return this.node_params.type; else return this.node.type; },
 
         mouseclick (e){ 
-          this.params.choosen_coords = [0, 0];
-          this.params.choosen = this.node;
-          this.params.choosen_type='node'
-          e.stopPropagation();
+          if(this.edge_params.mode) { 
+              this.edge_params.current_element = this.node;
+          } else {
+              this.params.choosen = this.node;
+          } e.stopPropagation();
         },
-        mousedown (e){ this.params.grab = true; }, 
-        mouseup (e) {  this.params.grab = false; },
-        mousemove (e) {
-            if(this.params.grab){
-                let pt = canvas.createSVGPoint();
-                pt.x = e.pageX;  pt.y = e.pageY;
-                pt = pt.matrixTransform(e.target.getScreenCTM().inverse());
-                
-                this.params.choosen_coords = [pt.x, pt.y];
-
-                this.node.x = pt.x;
-                this.node.y = pt.y;
-            }
-            e.stopPropagation();
-        }
+        mousedown (e){ this.params.choosen = this.node; this.params.grab = true; }, 
     }
 }
 </script>
@@ -98,5 +84,10 @@ export default {
 .main{
     fill:white;
     stroke:black;
+}
+.manual{
+    fill:none;
+    stroke:black;
+    stroke-dasharray:5;
 }
 </style>

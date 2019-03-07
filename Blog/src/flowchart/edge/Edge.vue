@@ -31,7 +31,6 @@ export default {
         },
         mouseclick (e){ 
           this.params.choosen = this.edge;
-          this.params.choosen_type='edge'
           e.stopPropagation();
         },
     }

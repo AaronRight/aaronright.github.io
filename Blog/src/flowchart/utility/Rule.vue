@@ -1,9 +1,9 @@
 <template>
     <svg>
-        <polyline :points="createRulePoints( width )" style="fill:none;stroke:black;stroke-width:0.5" />
-        <polyline :points="createRulePoints( height, false )" style="fill:none;stroke:black;stroke-width:0.5" />
+        <polyline :points="createRulePoints( width )" />
+        <polyline :points="createRulePoints( height, false )" />
 
-        <polyline v-if="grab" :points="createRayPoints()" style="fill:none; stroke:black; stroke-width:0.5; stroke-dasharray:5;" />
+        <polyline v-if="grab" :points="createRayPoints()" style="stroke-dasharray:5" />
     </svg>
 </template>
 <script>
@@ -12,7 +12,7 @@
             width: { type: Number, default: 500 },
             height: { type: Number, default: 500 },
             grab: { type: Boolean, default: false },
-            choosen_coords: { type: Array }
+            mouse: { type: Object }
         },
         methods:{
             createRulePoints(length, is_horizontal = true, step = 5, size_small = 2, size_big = 4){
@@ -31,14 +31,18 @@
                 return result.join(' ');
             },createRayPoints(){
                 let result = [];
-                result.push([0,this.choosen_coords[1]])
-                result.push([this.choosen_coords[0],this.choosen_coords[1]])
-                result.push([this.choosen_coords[0],0])
+                result.push([0,this.mouse.y])
+                result.push([this.mouse.x,this.mouse.y])
+                result.push([this.mouse.x,0])
                 return result.join(' ')
             }
         }
     }
 </script>
-<style>
-
+<style scoped>
+    svg{
+        fill:none;
+        stroke:black;
+        stroke-width:0.5;
+    }
 </style>
