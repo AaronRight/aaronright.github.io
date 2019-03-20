@@ -58,7 +58,7 @@
 				initConsole();
 			}
 			function print(){
-				canvas.innerHTML = '';
+				let innerHTML = '';
 				var re_base = new RegExp('(\<script\>.*\</script\>)', 'gim');
 				var re_local = new RegExp('\<script\>(.*)\</script\>', 'gim');
 				var html_editor_js_code = [];
@@ -67,11 +67,24 @@
 					if( value.indexOf('<script>') > -1 ) html_editor_js_code.push(value);
 					else html_editor_html_code.push(value); return } )
 								
-				loadElement(html_editor_html_code.join(''), canvas, 'div');
-				loadElement(html_editor_js_code.join(''), canvas, 'script');
-				loadElement(css_editor.value, canvas, 'style');
-				loadElement(js_editor.value, canvas, 'script');
+				innerHTML += generateElement(html_editor_html_code.join(''), canvas, 'div');
+				innerHTML += generateElement(html_editor_js_code.join(''), canvas, 'script');
+				innerHTML += generateElement(css_editor.value, canvas, 'style');
+				innerHTML += generateElement(js_editor.value, canvas, 'script');
+				
+				// try 1
+				canvas.src = 'data:text/html;charset=utf-8,' + encodeURI(innerHTML);
+				// or try 2
+				/*canvas.contentWindow.document.open();
+				canvas.contentWindow.document.write(html);
+				canvas.contentWindow.document.close();*/
 			}
+			function generateElement(implementationCode, location, container_type){
+				var scriptTag = document.createElement(container_type);
+				scriptTag.innerHTML = implementationCode;
+				return scriptTag;
+			};
+			
 			function loadElement(implementationCode, location, container_type){
 				/*try {
 					renderPage()
@@ -83,6 +96,7 @@
 				scriptTag.innerHTML = implementationCode;
 				location.appendChild(scriptTag);
 			};
+			
 			/*https://true-coder.ru/javascript/perexvat-vyzova-funkcii-v-javascript.html*/
 			/*https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy*/
 			
@@ -151,7 +165,8 @@
 				</td>
 				<td>
 					<div class="space">
-						<aaronright.custom.div class="space" id="canvas" ></aaronright.custom.div>
+						<!--aaronright.custom.div class="space" id="canvas" ></aaronright.custom.div-->
+						<iframe class="space" id="canvas" ></iframe>
 						<div class="label" style="border-right-color: green; color: white"> <div>Result</div> </div>
 					</div>
 				</td>
@@ -159,3 +174,4 @@
 		</table>
 	</body>
 </html>
+
