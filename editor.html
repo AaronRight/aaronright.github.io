@@ -1,135 +1,161 @@
 <html>
 	<head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" >
+		<style>
+			#content{ 
+				width: 100%;
+				height: 100%;
+				table-layout: fixed;
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			#content th,td {
+			  border: 1px solid black;
+			}
+			.space{
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			#console_input_editor{
+				width: 100%;
+				height: 100px;
+			}
+			.label{
+				width: 0;
+				height: 0;
+				border-bottom: 60px solid transparent;
+				border-right: 60px solid transparent;
+				position:absolute;
+				top: 0px;
+				right:0px;
+			}
+			.label div{
+				width: 60px;
+				transform: rotate(45deg) translate(50%, 30%);
+			}
+		</style>
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-		<style>
-			table input{
-				width: 50px;
-				height: 50px;
-			}
-			.input-group{	width: 200px;	}
-			#game{			margin: 50px;	}
-			h3{				margin: 0px;	}
-			#timer{ 		margin: 5px;	}
-		</style>
-	</head>
-	<body>
-		<div id="game">
-			<div class="input-group">
-			  <input id="field-size" type="number" class="form-control" min="2" max="5" value="3">
-			  <div class="input-group-append">
-			    <input type="button" class="btn btn-dark" value="Generate" onclick="generate()"/>
-			    <input id="manage-time" type="button" class="btn btn-outline-secondary" value="Start" onclick="start()"/>
-			  </div>
-			</div>
-			<h3><span id="timer" class="badge badge-danger">0:00:000</span></h3>
-			<div id="field"></div>
-		</div>
-	</body>
-		<script type="text/javascript">
-			var array;		var size;
-			var empty_x;	var empty_y;
-			var timer;		var timer_label = jQuery("#timer")[0];		var time_start;
+		<script>
+			var canvas;
+			var html_editor;
+			var css_editor;
+			var js_editor;
+			var console_editor;
+			var console_input_editor;
+			var console_output_editor;
+						
+			function init(){
+				canvas = document.getElementById('canvas');
+				html_editor = document.getElementById('html_editor');
+				css_editor = document.getElementById('css_editor');
+				js_editor = document.getElementById('js_editor');
+				console_editor = document.getElementById('console_editor');
+				console_input_editor = document.getElementById('console_input_editor');
+				console_output_editor = document.getElementById('console_output_editor');
 				
-			function btnClick(event){
-				var target_x;
-				var target_y;
+				initConsole();
+			}
+			function print(){
+				canvas.innerHTML = '';
+				var re_base = new RegExp('(\<script\>.*\</script\>)', 'gim');
+				var re_local = new RegExp('\<script\>(.*)\</script\>', 'gim');
+				var html_editor_js_code = [];
+				var html_editor_html_code = []; 
+				html_editor.value.split(re_base).map(function(value, index){ 
+					if( value.indexOf('<script>') > -1 ) html_editor_js_code.push(value);
+					else html_editor_html_code.push(value); return } )
+								
+				loadElement(html_editor_html_code.join(''), canvas, 'div');
+				loadElement(html_editor_js_code.join(''), canvas, 'script');
+				loadElement(css_editor.value, canvas, 'style');
+				loadElement(js_editor.value, canvas, 'script');
+			}
+			function loadElement(implementationCode, location, container_type){
+				/*try {
+					renderPage()
+				} catch (err) {
+					document.getElementById('page').innerHTML = 'An error occurred: ' + err.message;
+				}*/
+			
+				var scriptTag = document.createElement(container_type);
+				scriptTag.innerHTML = implementationCode;
+				location.appendChild(scriptTag);
+			};
+			/*https://true-coder.ru/javascript/perexvat-vyzova-funkcii-v-javascript.html*/
+			/*https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy*/
+			
+			function runConsoleCommand(){
+				console.log( eval( console_input_editor.value ) )
+			}
+			
+			function addRow(text, color='white'){
+				let new_row = console_output_editor.insertRow(-1);
+				let new_cell = new_row.insertCell(-1);
+				new_cell.innerHTML = text;
+				new_cell.style.background = color;
+			}
+			
+			function initConsole(){
+				let old_log = window.console.log
+				let new_log = function( message ){ addRow( message )};
+				console.log = function( message ){ old_log( message ); new_log( message );  }
 				
-				for (var i=0; i<size; i++)
-					for (var j=0; j<size; j++)
-						if ( event.target == array[i][j].firstChild ){
-							target_x = i;
-							target_y = j;
-						}
-
-				// move if neccessary
-				if( (Math.abs (target_x - empty_x) == 1 && target_y == empty_y) 
-				 || (Math.abs (target_y - empty_y) == 1 && target_x == empty_x) ){
-					swap(target_x, target_y, empty_x, empty_y)
-					empty_x = target_x;
-					empty_y = target_y;
-					// check if win
-					if(isVictory())	stop();
-					return;
-				}
-			}
-			function generate(){
-				var field = jQuery("#field")[0];
-				size = jQuery("#field-size")[0].value;
+				let old_error = window.console.error
+				let new_error = function( message ){ addRow( message, 'red' )};
+				console.error = function( message ){ old_error( message ); new_error( message );  }
 				
-				// clear field
-				field.innerHTML = '';
+				let old_debug = window.console.debug
+				let new_debug = function( message ){ addRow( message, 'yellow' )};
+				console.debug = function( message ){ old_debug( message ); new_debug( message );  }
 				
-				// create buttons
-				array = {}
-				var table = document.createElement('table');
-				for (var i=0; i<size; i++){
-					array[i] = {}
-					var row = document.createElement('tr');
-					for (var j=0; j<size; j++){
-						var column = document.createElement('td');
-						array[i][j] = column;
-			            
-						if( i!=0 || j!=0 ){	
-							var newBtn = document.createElement('input');
-				            newBtn.setAttribute("class", "btn btn-dark");
-				            newBtn.setAttribute("value", size * i + j);
-							newBtn.setAttribute("onclick", "btnClick(event)");
-				            column.appendChild(newBtn);
-						} else {
-							empty_x = i;	empty_y = j;
-							column.innerHTML = ''
-						}
-						row.appendChild(column);
-					}
-					table.appendChild(row);
-				}
-				field.appendChild(table);
+				let old_info = window.console.info
+				let new_info = function( message ){ addRow( message )};
+				console.info = function( message ){ old_info( message ); new_info( message );  }
 				
-				// shufle it
-				for (var i=0; i<size; i++)
-					for (var j=0; j<size; j++){
-						swap( Math.floor(Math.random() * size) , Math.floor(Math.random() * size) , 
-							Math.floor(Math.random() * size) , Math.floor(Math.random() * size) );
-					}
-			}
-			function swap(old_x, old_y, new_x, new_y){
-				var temp = array[old_x][old_y].firstChild;
-				array[old_x][old_y].removeChild( array[old_x][old_y].firstChild ) ;
-				array[old_x][old_y].appendChild( array[new_x][new_y].firstChild ) ;
-				array[new_x][new_y].removeChild( array[new_x][new_y].firstChild ) ;
-				array[new_x][new_y].appendChild( temp ) ;
-			}
-			function isVictory(){
-				for (var i=0; i<size; i++)	for (var j=0; j<size; j++) 	
-					if(array[i][j] != '') if(array[i][j].value != size * i + j + 1)	return false;
-				return true;    
-			}
-			function updateTimer(){
-			    var current = new Date();
-			    time_diff = current.getTime() - time_start.getTime();
-			    minutes_diff = Math.floor(time_diff / 1000 / 60);
-			    seconds_diff = Math.floor(time_diff / 1000);
-			    milliseconds_diff = time_diff - seconds_diff * 1000; 
-			    seconds_diff = seconds_diff - minutes_diff * 60;
-    			timer_label.innerHTML = minutes_diff + ":" + seconds_diff + ":" + milliseconds_diff;
-			}
-			function start(){
-				time_start = new Date();
-				timer_label.setAttribute("class", "badge badge-danger");
-				timer = setInterval(updateTimer, 10); /*every 10 ms*/
-				var btn = jQuery("#manage-time")[0];
-				btn.setAttribute("onclick", "stop()");
-				btn.setAttribute("value", "Stop");
-			}
-			function stop(){
-				timer_label.setAttribute("class", "badge badge-success")
-				clearInterval(timer);
-				var btn = jQuery("#manage-time")[0];
-				btn.setAttribute("onclick", "start()");
-				btn.setAttribute("value", "Start");
+				window.onerror = function( message ){ addRow( message, 'red' )};
 			}
 		</script>
+	</head>
+	<body onload="init()">
+		<table id="content">
+			<tr>
+				<td rowspan=2>
+					<div class="space">
+						<textarea id="console_input_editor"></textarea>
+						<button onclick="runConsoleCommand()"> Run </button>
+						<table id="console_output_editor"></table>
+						<div class="label" style="border-right-color: gray; color: white"> <div>Log</div> </div>
+					</div>
+				</td>
+				<td>
+					<div class="space">
+						<textarea id="html_editor" class="space" onkeyup="print()"></textarea>
+						<div class="label" style="border-right-color: red; color: white"> <div>Html</div> </div>
+					</div>
+				</td>
+				<td>
+					<div class="space">
+						<textarea class="space" id="js_editor" onkeyup="print()"></textarea>
+						<div class="label" style="border-right-color: yellow"> <div>JS</div> </div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="space">
+						<textarea class="space" id="css_editor" onkeyup="print()"></textarea>
+						<div class="label" style="border-right-color: blue; color: white"> <div>Css</div> </div>
+					</div>
+				</td>
+				<td>
+					<div class="space">
+						<aaronright.custom.div class="space" id="canvas" ></aaronright.custom.div>
+						<div class="label" style="border-right-color: green; color: white"> <div>Result</div> </div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</body>
 </html>
