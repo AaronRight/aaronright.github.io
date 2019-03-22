@@ -35,8 +35,7 @@
 			}
 		</style>
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		
 		<script>
 			var canvas;
 			var html_editor;
@@ -59,19 +58,9 @@
 			}
 			function print(){
 				let innerHTML = '';
-				var re_base = new RegExp('(\<script\>.*\</script\>)', 'gim');
-				var re_local = new RegExp('\<script\>(.*)\</script\>', 'gim');
-				var html_editor_js_code = [];
-				var html_editor_html_code = []; 
-				html_editor.value.split(re_base).map(function(value, index){ 
-					if( value.indexOf('<script>') > -1 ) html_editor_js_code.push(value);
-					else html_editor_html_code.push(value); return } )
-								
-				innerHTML += generateElement(html_editor_html_code.join(''), canvas, 'div');
-				innerHTML += generateElement(html_editor_js_code.join(''), canvas, 'script');
-				innerHTML += generateElement(css_editor.value, canvas, 'style');
-				innerHTML += generateElement(js_editor.value, canvas, 'script');
-				
+				innerHTML += generateElement(html_editor.value, 'div', []);
+				innerHTML += generateElement(css_editor.value, 'style', []);
+				innerHTML += generateElement(js_editor.value, 'script', []);
 				// try 1
 				canvas.src = 'data:text/html;charset=utf-8,' + encodeURI(innerHTML);
 				// or try 2
@@ -79,9 +68,10 @@
 				canvas.contentWindow.document.write(html);
 				canvas.contentWindow.document.close();*/
 			}
-			function generateElement(implementationCode, location, container_type){
-				var scriptTag = document.createElement(container_type);
-				scriptTag.innerHTML = implementationCode;
+			function generateElement(implementationCode, container_type, ...attributes){
+				let scriptTag = '<' + container_type +  attributes.join(' ') + '>' ;
+				scriptTag += implementationCode;
+				scriptTag += '</' + container_type + '>';
 				return scriptTag;
 			};
 			
@@ -151,7 +141,7 @@
 				</td>
 				<td>
 					<div class="space">
-						<textarea class="space" id="js_editor" onkeyup="print()"></textarea>
+						<textarea class="space" id="js_editor"[></textarea>
 						<div class="label" style="border-right-color: yellow"> <div>JS</div> </div>
 					</div>
 				</td>
