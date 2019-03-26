@@ -1,10 +1,10 @@
 <template>
   <v-sheet height="424">
       <table>
-        <tr> <td>1</td><td>123</td> </tr>
-        <tr> <td>2</td><td>223</td> </tr>
-        <tr> <td>3</td><td>333</td> </tr>
-        <tr> <td>4</td><td>433</td> </tr>
+        <tr> <td>1</td> <td contenteditable="true">123</td> </tr>
+        <tr> <td>2</td> <td contenteditable="true">223</td> </tr>
+        <tr> <td>3</td> <td contenteditable="true" >333</td> </tr>
+        <tr> <td>4</td> <td contenteditable="true" >433</td> </tr>
       </table>
   </v-sheet>
 </template>
