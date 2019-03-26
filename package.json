@@ -1,4 +1,4 @@
 {
   "private": true,
-  "workspaces": ["Drums", "Blog"]
+  "workspaces": ["Drums", "Blog", "scriptIDE"]
 }
