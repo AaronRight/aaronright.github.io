@@ -12,7 +12,9 @@
 <script>
   export default {
     data: () => ({
-      
+      //https://github.com/codemirror/CodeMirror 
+      //https://github.com/liriliri/eruda
+      //http://www.hnldesign.nl/work/code/mobileconsole-javascript-console-for-mobile-devices/
     })
   }
 </script>
