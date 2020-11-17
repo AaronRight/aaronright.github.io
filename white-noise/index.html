@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>React App</title>
+  <style>
+    html, body{ width: 100%; height: 100%; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; flex: 1; flex-direction: row; }
+    body { flex: 0.5; flex-direction: column; align-items: stretch ;}
+    #noise1, #noise2{ display: none }
+    #click { flex: 0.5; box-shadow: 5px 5px; }
+  </style>
+</head>
+
+<body>
+  <button id="click"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+    <path fill="#000000" d="M 2,2 L 8,5 2,8 Z" />
+  </svg></button>
+
+  <audio id="noise1" controls>
+    <source src="./noise.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="noise2" controls>
+    <source src="./noise.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let noise1 = document.getElementById("noise1")
+    let noise2 = document.getElementById("noise2")
+    let click = document.getElementById("click")
+
+    noise1.addEventListener('timeupdate', function () {
+      var buffer = 0.25
+      if (this.currentTime > this.duration - buffer && noise2.paused) {
+        noise2.currentTime = 0
+        noise2.play();
+      }
+    });
+
+    noise2.addEventListener('timeupdate', function () {
+      var buffer = 0.25
+      if (this.currentTime > this.duration - buffer && noise1.paused) {
+        noise1.currentTime = 0
+        noise1.play()
+      }
+    });
+
+    click.addEventListener('click', function (event) {
+      if (noise1.paused && noise2.paused) {
+        noise1.currentTime = 0
+        noise1.play()
+        event.currentTarget.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"> <rect fill="#000000" x="2" y="2" width="6" height="6" /> </svg>'
+      } else {
+        noise1.pause()
+        noise2.pause()
+        event.currentTarget.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"> <path fill="#000000" d="M 2,2 L 8,5 2,8 Z" /> </svg>'
+      }
+    });
+  </script>
+</body>
+
+</html>
