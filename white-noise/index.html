@@ -158,11 +158,13 @@
       if (play) {
         Noise.play(noise)
         event.currentTarget.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"> <rect fill="#000000" x="2" y="2" width="6" height="6" /> </svg>'
-      } else {
+      play = false;
+} else {
         Noise.stop(noise)
         event.currentTarget.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"> <path fill="#000000" d="M 2,2 L 8,5 2,8 Z" /> </svg>'
-      }
-      play = !play;
+      play = true
+}
+      
     });
   </script>
 </body>
