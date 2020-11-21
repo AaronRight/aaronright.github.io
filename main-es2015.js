@@ -109,7 +109,7 @@ class Noise {
         track.gainNode.gain.linearRampToValueAtTime(track.volume, this.audioContext.currentTime + track.fadeIn);
     }
     playNoise(track) {
-        this.stopNoise(track);
+        // this.stopNoise(track);
         this.buildTrack(track);
         this.createNoise(track);
         this.setGain(track);

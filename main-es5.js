@@ -158,7 +158,7 @@
         }, {
           key: "playNoise",
           value: function playNoise(track) {
-            this.stopNoise(track);
+            // this.stopNoise(track);
             this.buildTrack(track);
             this.createNoise(track);
             this.setGain(track);
