@@ -84,7 +84,8 @@
         function Noise() {
           _classCallCheck(this, Noise);
 
-          this.audioContext = new window.AudioContext();
+          // @ts-ignore
+          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
         } // https://noisehack.com/generate-noise-web-audio-api/
 
 

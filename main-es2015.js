@@ -52,7 +52,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Noise", function() { return Noise; });
 class Noise {
     constructor() {
-        this.audioContext = new window.AudioContext;
+        // @ts-ignore
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
     // https://noisehack.com/generate-noise-web-audio-api/
     createNoise(track) {
