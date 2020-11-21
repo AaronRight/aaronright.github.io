@@ -1,6 +1,10 @@
 (function () {
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
     /***/
     0:
@@ -13,7 +17,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       module.exports = __webpack_require__(
-      /*! C:\Users\Victor\Documents\io-test\src\main.ts */
+      /*! C:\Users\Victor\Documents\aaronright.github.io\white-noise\src\main.ts */
       "zUnb");
       /***/
     },
@@ -81,12 +85,140 @@
       var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! @angular/core */
       "fXoL");
+      /* harmony import */
 
-      var AppComponent = function AppComponent() {
-        _classCallCheck(this, AppComponent);
 
-        this.title = 'io-test';
-      };
+      var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/common */
+      "ofXK");
+
+      function AppComponent__svg_rect_1_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "rect", 3);
+        }
+      }
+
+      function AppComponent__svg_ng_template_2_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "path", 4);
+        }
+      }
+      /*
+      class Noise {
+        static audioContext = new window.AudioContext;
+        static fadeOutTimer: any;
+      
+        // https://noisehack.com/generate-noise-web-audio-api/
+        static createNoise(track: any) {
+      
+          const bufferSize = 2 * Noise.audioContext.sampleRate;
+          const noiseBuffer = Noise.audioContext.createBuffer(1, bufferSize, Noise.audioContext.sampleRate);
+          const output = noiseBuffer.getChannelData(0);
+      
+          for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+          }
+      
+          track.audioSource.buffer = noiseBuffer;
+        }
+      
+        static stopNoise(track: any) {
+          if (track.audioSource) {
+            clearTimeout(Noise.fadeOutTimer);
+            track.audioSource.stop();
+          }
+        }
+      
+        static fadeNoise(track: any) {
+      
+          if (track.fadeOut) {
+            track.fadeOut = (track.fadeOut >= 0) ? track.fadeOut : 0.5;
+          } else {
+            track.fadeOut = 0.5;
+          }
+      
+          if (track.canFade) {
+            track.gainNode.gain.linearRampToValueAtTime(0, Noise.audioContext.currentTime + track.fadeOut);
+            track.canFade = false;
+      
+            Noise.fadeOutTimer = setTimeout(() => {
+              Noise.stopNoise(track);
+            }, track.fadeOut * 1000);
+      
+          } else {
+            Noise.stopNoise(track);
+          }
+        }
+      
+        static buildTrack(track: any) {
+          track.audioSource = Noise.audioContext.createBufferSource();
+          track.gainNode = Noise.audioContext.createGain();
+          track.audioSource.connect(track.gainNode);
+          track.gainNode.connect(Noise.audioContext.destination);
+          track.canFade = true; // used to prevent fadeOut firing twice
+        }
+      
+        static setGain(track: any) {
+      
+          track.volume = (track.volume >= 0) ? track.volume : 0.5;
+      
+          if (track.fadeIn) {
+            track.fadeIn = (track.fadeIn >= 0) ? track.fadeIn : 0.5;
+          } else {
+            track.fadeIn = 0.5;
+          }
+      
+          track.gainNode.gain.setValueAtTime(0, Noise.audioContext.currentTime);
+      
+          track.gainNode.gain.linearRampToValueAtTime(track.volume / 4, Noise.audioContext.currentTime + track.fadeIn / 2);
+      
+          track.gainNode.gain.linearRampToValueAtTime(track.volume, Noise.audioContext.currentTime + track.fadeIn);
+      
+        }
+      
+        static playNoise(track: any) {
+          Noise.stopNoise(track);
+          Noise.buildTrack(track);
+          Noise.createNoise(track);
+          Noise.setGain(track);
+          track.audioSource.loop = true;
+          track.audioSource.start();
+        }
+      }
+      
+      var noise = {
+        volume: 0.05, // 0 - 1
+        fadeIn: 2.5, // time in seconds
+        fadeOut: 1.3, // time in seconds
+      }
+      */
+
+
+      var AppComponent = /*#__PURE__*/function () {
+        function AppComponent() {
+          _classCallCheck(this, AppComponent);
+
+          this.title = 'White Noise';
+          this.play = false;
+        }
+
+        _createClass(AppComponent, [{
+          key: "perform",
+          value: function perform() {
+            if (this.play) {//Noise.stopNoise(noise)
+            } else {//Noise.playNoise(noise)
+              }
+
+            this.play = !this.play;
+          }
+        }]);
+
+        return AppComponent;
+      }();
 
       AppComponent.ɵfac = function AppComponent_Factory(t) {
         return new (t || AppComponent)();
@@ -95,92 +227,35 @@
       AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
         type: AppComponent,
         selectors: [["app-root"]],
-        decls: 21,
+        decls: 4,
         vars: 2,
-        consts: [[1, "content", 2, "text-align", "center"], [2, "display", "block"], ["width", "300", "alt", "Angular Logo", "src", "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="], ["target", "_blank", "rel", "noopener", "href", "https://angular.io/tutorial"], ["target", "_blank", "rel", "noopener", "href", "https://angular.io/cli"], ["target", "_blank", "rel", "noopener", "href", "https://blog.angular.io/"]],
+        consts: [["xmlns", "http://www.w3.org/2000/svg", "viewBox", "0 0 10 10", 3, "click"], ["fill", "#000000", "x", "2", "y", "2", "width", "6", "height", "6", 4, "ngIf", "ngIfElse"], ["elseBlock", ""], ["fill", "#000000", "x", "2", "y", "2", "width", "6", "height", "6"], ["fill", "#000000", "d", "M 2,2 L 8,5 2,8 Z"]],
         template: function AppComponent_Template(rf, ctx) {
           if (rf & 1) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h1");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "svg", 0);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function AppComponent_Template__svg_svg_click_0_listener() {
+              return ctx.perform();
+            });
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, AppComponent__svg_rect_1_Template, 1, 0, "rect", 1);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "span", 1);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](5, "img", 2);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "h2");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "Here are some links to help you start: ");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "ul");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "li");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "h2");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "a", 3);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](12, "Tour of Heroes");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "li");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "h2");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "a", 4);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16, "CLI Documentation");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "li");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "h2");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "a", 5);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, "Angular blog");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, AppComponent__svg_ng_template_2_Template, 1, 0, "ng-template", null, 2, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
           }
 
           if (rf & 2) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+            var _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](3);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" Welcome to ", ctx.title, "! ");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx.title, " app is running!");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.play)("ngIfElse", _r1);
           }
         },
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgIf"]],
         encapsulation: 2
       });
       /*@__PURE__*/
@@ -190,7 +265,7 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
           args: [{
             selector: 'app-root',
-            template: "\n    <!--The content below is only a placeholder and can be replaced.-->\n    <div style=\"text-align:center\" class=\"content\">\n      <h1>\n        Welcome to {{title}}!\n      </h1>\n      <span style=\"display: block\">{{ title }} app is running!</span>\n      <img width=\"300\" alt=\"Angular Logo\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\n    </div>\n    <h2>Here are some links to help you start: </h2>\n    <ul>\n      <li>\n        <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/tutorial\">Tour of Heroes</a></h2>\n      </li>\n      <li>\n        <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/cli\">CLI Documentation</a></h2>\n      </li>\n      <li>\n        <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://blog.angular.io/\">Angular blog</a></h2>\n      </li>\n    </ul>\n    \n  ",
+            template: "\n  <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 10 10\" (click)=\"perform()\">\n    <rect *ngIf=\"play; else elseBlock\" fill=\"#000000\" x=\"2\" y=\"2\" width=\"6\" height=\"6\"></rect>  \n    <ng-template #elseBlock>\n      <path fill=\"#000000\" d=\"M 2,2 L 8,5 2,8 Z\"></path>\n    </ng-template>\n  </svg>\n  ",
             styles: []
           }]
         }], null, null);
