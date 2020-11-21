@@ -237,21 +237,30 @@
           _classCallCheck(this, AppComponent);
 
           this.title = 'White Noise';
+          this.message = "";
           this.play = false;
         }
 
         _createClass(AppComponent, [{
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
-            this.noise = new _noise__WEBPACK_IMPORTED_MODULE_1__["Noise"]();
+            try {
+              this.noise = new _noise__WEBPACK_IMPORTED_MODULE_1__["Noise"]();
+            } catch (ex) {
+              this.message = ex;
+            }
           }
         }, {
           key: "perform",
           value: function perform() {
-            if (this.play) {
-              this.noise.stopNoise(_noise__WEBPACK_IMPORTED_MODULE_1__["Noise"].template);
-            } else {
-              this.noise.playNoise(_noise__WEBPACK_IMPORTED_MODULE_1__["Noise"].template);
+            try {
+              if (this.play) {
+                this.noise.stopNoise(_noise__WEBPACK_IMPORTED_MODULE_1__["Noise"].template);
+              } else {
+                this.noise.playNoise(_noise__WEBPACK_IMPORTED_MODULE_1__["Noise"].template);
+              }
+            } catch (ex) {
+              this.message = ex;
             }
 
             this.play = !this.play;
@@ -268,8 +277,8 @@
       AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
         type: AppComponent,
         selectors: [["app-root"]],
-        decls: 4,
-        vars: 2,
+        decls: 6,
+        vars: 3,
         consts: [["xmlns", "http://www.w3.org/2000/svg", "viewBox", "0 0 10 10", 3, "click"], ["fill", "#000000", "x", "2", "y", "2", "width", "6", "height", "6", 4, "ngIf", "ngIfElse"], ["elseBlock", ""], ["fill", "#000000", "x", "2", "y", "2", "width", "6", "height", "6"], ["fill", "#000000", "d", "M 2,2 L 8,5 2,8 Z"]],
         template: function AppComponent_Template(rf, ctx) {
           if (rf & 1) {
@@ -286,6 +295,14 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, AppComponent__svg_ng_template_2_Template, 1, 0, "ng-template", null, 2, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceHTML"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
           }
 
           if (rf & 2) {
@@ -294,6 +311,10 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.play)("ngIfElse", _r1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.message);
           }
         },
         directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"]],
@@ -306,7 +327,7 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
           args: [{
             selector: 'app-root',
-            template: "\n  <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 10 10\" (click)=\"perform()\">\n    <rect *ngIf=\"play; else elseBlock\" fill=\"#000000\" x=\"2\" y=\"2\" width=\"6\" height=\"6\"></rect>  \n    <ng-template #elseBlock>\n      <path fill=\"#000000\" d=\"M 2,2 L 8,5 2,8 Z\"></path>\n    </ng-template>\n  </svg>\n  ",
+            template: "\n  <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 10 10\" (click)=\"perform()\">\n    <rect *ngIf=\"play; else elseBlock\" fill=\"#000000\" x=\"2\" y=\"2\" width=\"6\" height=\"6\"></rect>  \n    <ng-template #elseBlock>\n      <path fill=\"#000000\" d=\"M 2,2 L 8,5 2,8 Z\"></path>\n    </ng-template>\n  </svg>\n  <div>{{message}}</div>\n  ",
             styles: []
           }]
         }], null, null);
