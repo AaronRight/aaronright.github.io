@@ -40,6 +40,91 @@ const environment = {
 
 /***/ }),
 
+/***/ "NIcn":
+/*!**************************!*\
+  !*** ./src/app/noise.ts ***!
+  \**************************/
+/*! exports provided: Noise */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Noise", function() { return Noise; });
+class Noise {
+    constructor() {
+        this.audioContext = new window.AudioContext;
+    }
+    // https://noisehack.com/generate-noise-web-audio-api/
+    createNoise(track) {
+        const bufferSize = 2 * this.audioContext.sampleRate;
+        const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+        }
+        track.audioSource.buffer = noiseBuffer;
+    }
+    stopNoise(track) {
+        if (track.audioSource) {
+            clearTimeout(this.fadeOutTimer);
+            track.audioSource.stop();
+        }
+    }
+    fadeNoise(track) {
+        if (track.fadeOut) {
+            track.fadeOut = (track.fadeOut >= 0) ? track.fadeOut : 0.5;
+        }
+        else {
+            track.fadeOut = 0.5;
+        }
+        if (track.canFade) {
+            track.gainNode.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + track.fadeOut);
+            track.canFade = false;
+            this.fadeOutTimer = setTimeout(() => {
+                this.stopNoise(track);
+            }, track.fadeOut * 1000);
+        }
+        else {
+            this.stopNoise(track);
+        }
+    }
+    buildTrack(track) {
+        track.audioSource = this.audioContext.createBufferSource();
+        track.gainNode = this.audioContext.createGain();
+        track.audioSource.connect(track.gainNode);
+        track.gainNode.connect(this.audioContext.destination);
+        track.canFade = true; // used to prevent fadeOut firing twice
+    }
+    setGain(track) {
+        track.volume = (track.volume >= 0) ? track.volume : 0.5;
+        if (track.fadeIn) {
+            track.fadeIn = (track.fadeIn >= 0) ? track.fadeIn : 0.5;
+        }
+        else {
+            track.fadeIn = 0.5;
+        }
+        track.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+        track.gainNode.gain.linearRampToValueAtTime(track.volume / 4, this.audioContext.currentTime + track.fadeIn / 2);
+        track.gainNode.gain.linearRampToValueAtTime(track.volume, this.audioContext.currentTime + track.fadeIn);
+    }
+    playNoise(track) {
+        this.stopNoise(track);
+        this.buildTrack(track);
+        this.createNoise(track);
+        this.setGain(track);
+        track.audioSource.loop = true;
+        track.audioSource.start();
+    }
+}
+Noise.template = {
+    volume: 0.05,
+    fadeIn: 2.5,
+    fadeOut: 1.3,
+};
+
+
+/***/ }),
+
 /***/ "Sy1n":
 /*!**********************************!*\
   !*** ./src/app/app.component.ts ***!
@@ -51,7 +136,9 @@ const environment = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _noise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./noise */ "NIcn");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
+
 
 
 
@@ -63,106 +150,20 @@ function AppComponent__svg_ng_template_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "path", 4);
 } }
-/*
-class Noise {
-  static audioContext = new window.AudioContext;
-  static fadeOutTimer: any;
-
-  // https://noisehack.com/generate-noise-web-audio-api/
-  static createNoise(track: any) {
-
-    const bufferSize = 2 * Noise.audioContext.sampleRate;
-    const noiseBuffer = Noise.audioContext.createBuffer(1, bufferSize, Noise.audioContext.sampleRate);
-    const output = noiseBuffer.getChannelData(0);
-
-    for (let i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 - 1;
-    }
-
-    track.audioSource.buffer = noiseBuffer;
-  }
-
-  static stopNoise(track: any) {
-    if (track.audioSource) {
-      clearTimeout(Noise.fadeOutTimer);
-      track.audioSource.stop();
-    }
-  }
-
-  static fadeNoise(track: any) {
-
-    if (track.fadeOut) {
-      track.fadeOut = (track.fadeOut >= 0) ? track.fadeOut : 0.5;
-    } else {
-      track.fadeOut = 0.5;
-    }
-
-    if (track.canFade) {
-      track.gainNode.gain.linearRampToValueAtTime(0, Noise.audioContext.currentTime + track.fadeOut);
-      track.canFade = false;
-
-      Noise.fadeOutTimer = setTimeout(() => {
-        Noise.stopNoise(track);
-      }, track.fadeOut * 1000);
-
-    } else {
-      Noise.stopNoise(track);
-    }
-  }
-
-  static buildTrack(track: any) {
-    track.audioSource = Noise.audioContext.createBufferSource();
-    track.gainNode = Noise.audioContext.createGain();
-    track.audioSource.connect(track.gainNode);
-    track.gainNode.connect(Noise.audioContext.destination);
-    track.canFade = true; // used to prevent fadeOut firing twice
-  }
-
-  static setGain(track: any) {
-
-    track.volume = (track.volume >= 0) ? track.volume : 0.5;
-
-    if (track.fadeIn) {
-      track.fadeIn = (track.fadeIn >= 0) ? track.fadeIn : 0.5;
-    } else {
-      track.fadeIn = 0.5;
-    }
-
-    track.gainNode.gain.setValueAtTime(0, Noise.audioContext.currentTime);
-
-    track.gainNode.gain.linearRampToValueAtTime(track.volume / 4, Noise.audioContext.currentTime + track.fadeIn / 2);
-
-    track.gainNode.gain.linearRampToValueAtTime(track.volume, Noise.audioContext.currentTime + track.fadeIn);
-
-  }
-
-  static playNoise(track: any) {
-    Noise.stopNoise(track);
-    Noise.buildTrack(track);
-    Noise.createNoise(track);
-    Noise.setGain(track);
-    track.audioSource.loop = true;
-    track.audioSource.start();
-  }
-}
-
-var noise = {
-  volume: 0.05, // 0 - 1
-  fadeIn: 2.5, // time in seconds
-  fadeOut: 1.3, // time in seconds
-}
-*/
 class AppComponent {
     constructor() {
         this.title = 'White Noise';
         this.play = false;
     }
+    ngAfterViewInit() {
+        this.noise = new _noise__WEBPACK_IMPORTED_MODULE_1__["Noise"]();
+    }
     perform() {
         if (this.play) {
-            //Noise.stopNoise(noise)
+            this.noise.stopNoise(_noise__WEBPACK_IMPORTED_MODULE_1__["Noise"].template);
         }
         else {
-            //Noise.playNoise(noise)
+            this.noise.playNoise(_noise__WEBPACK_IMPORTED_MODULE_1__["Noise"].template);
         }
         this.play = !this.play;
     }
@@ -179,7 +180,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.play)("ngIfElse", _r1);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgIf"]], encapsulation: 2 });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"]], encapsulation: 2 });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
