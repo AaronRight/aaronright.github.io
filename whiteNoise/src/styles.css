@@ -8,11 +8,4 @@ html, body {
     justify-content: center;
     align-items: center;
     flex: 1;
-    flex-direction: row;
-  }
-  
-  body {
-    flex: 0.5;
-    flex-direction: column;
-    align-items: stretch;
   }

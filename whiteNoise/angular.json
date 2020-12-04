@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "io-test": {
+    "WhiteNoise": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -40,7 +40,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/io-test",
+            "outputPath": "dist/WhiteNoise",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -48,7 +48,8 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles.css"
@@ -82,31 +83,33 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "io-test:build"
+            "browserTarget": "WhiteNoise:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "io-test:build:production"
+              "browserTarget": "WhiteNoise:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "io-test:build"
+            "browserTarget": "WhiteNoise:build"
           }
         }
       }
     }
   },
-  "defaultProject": "io-test",
+  "defaultProject": "WhiteNoise",
   "cli": {
     "analytics": false
   }

@@ -1,8 +1,6 @@
     export class Noise {
         // @ts-ignore
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-
-        audioContext = new AudioContext();
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
         fadeOutTimer: any;
       
         // https://noisehack.com/generate-noise-web-audio-api/
@@ -22,7 +20,9 @@
         stopNoise(track: any) {
           if (track.audioSource) {
             clearTimeout(this.fadeOutTimer);
-            track.audioSource.stop();
+            try {
+              track.audioSource.stop();
+            } catch(err){}
           }
         }
       
@@ -74,14 +74,18 @@
         }
       
         playNoise(track: any) {
-          console.log(this.audioContext)
-    
+
           this.stopNoise(track);
           this.buildTrack(track);
           this.createNoise(track);
           this.setGain(track);
           track.audioSource.loop = true;
+
+          console.log(123)
+
           track.audioSource.start();
+
+          console.log(234)
         }
     
         static template = {
