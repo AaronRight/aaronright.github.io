@@ -2,6 +2,10 @@
     flex:1
 }
 
+svg{
+    height: 100%;
+}
+
 /*
 
 on IOS not worked css-d-parameter

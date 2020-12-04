@@ -1,6 +1,6 @@
     export class Noise {
         // @ts-ignore
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        audioContext = new ( window.AudioContext ? window.AudioContext : window.webkitAudioContext)();
         fadeOutTimer: any;
       
         // https://noisehack.com/generate-noise-web-audio-api/
