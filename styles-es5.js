@@ -467,12 +467,12 @@
       var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(true); // Module
 
 
-      ___CSS_LOADER_EXPORT___.push([module.i, "html, body {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n  }\n  \n  body {\n    -ms-flex: 0.5;\n        flex: 0.5;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-align: stretch;\n        align-items: stretch;\n  }\n  \n  svg {\n    -ms-flex: 0.5;\n        flex: 0.5;\n    box-shadow: 5px 5px;\n    background: #DDD;\n  }", "", {
+      ___CSS_LOADER_EXPORT___.push([module.i, "/* You can add global styles to this file, and also import other style files */\nhtml, body {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n    -ms-flex: 1;\n        flex: 1;\n    -ms-flex-direction: row;\n        flex-direction: row;\n  }\nbody {\n    -ms-flex: 0.5;\n        flex: 0.5;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    -ms-flex-align: stretch;\n        align-items: stretch;\n  }", "", {
         "version": 3,
         "sources": ["webpack://src/styles.css"],
         "names": [],
-        "mappings": "AAAA;IACI,WAAW;IACX,YAAY;IACZ,SAAS;IACT,UAAU;IACV,oBAAa;IAAb,aAAa;IACb,qBAAuB;QAAvB,uBAAuB;IACvB,sBAAmB;QAAnB,mBAAmB;IACnB,WAAO;QAAP,OAAO;IACP,uBAAmB;QAAnB,mBAAmB;EACrB;;EAEA;IACE,aAAS;QAAT,SAAS;IACT,0BAAsB;QAAtB,sBAAsB;IACtB,uBAAoB;QAApB,oBAAoB;EACtB;;EAEA;IACE,aAAS;QAAT,SAAS;IACT,mBAAmB;IACnB,gBAAgB;EAClB",
-        "sourcesContent": ["html, body {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex: 1;\n    flex-direction: row;\n  }\n  \n  body {\n    flex: 0.5;\n    flex-direction: column;\n    align-items: stretch;\n  }\n  \n  svg {\n    flex: 0.5;\n    box-shadow: 5px 5px;\n    background: #DDD;\n  }"],
+        "mappings": "AAAA,8EAA8E;AAC9E;IACI,WAAW;IACX,YAAY;IACZ,SAAS;IACT,UAAU;IACV,oBAAa;IAAb,aAAa;IACb,qBAAuB;QAAvB,uBAAuB;IACvB,sBAAmB;QAAnB,mBAAmB;IACnB,WAAO;QAAP,OAAO;IACP,uBAAmB;QAAnB,mBAAmB;EACrB;AAEA;IACE,aAAS;QAAT,SAAS;IACT,0BAAsB;QAAtB,sBAAsB;IACtB,uBAAoB;QAApB,oBAAoB;EACtB",
+        "sourcesContent": ["/* You can add global styles to this file, and also import other style files */\nhtml, body {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex: 1;\n    flex-direction: row;\n  }\n  \n  body {\n    flex: 0.5;\n    flex-direction: column;\n    align-items: stretch;\n  }"],
         "sourceRoot": ""
       }]); // Exports
 
