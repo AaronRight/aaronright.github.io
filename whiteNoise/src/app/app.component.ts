@@ -1,12 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Noise } from './noise';
-
-@Component({
-  selector: 'app-root',
-  template: `
-    <div [ngClass]="play ? 'play' : ''" (click)="perform()">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-        <path *ngIf="!play; else elseBlock" d="M 3.2723216,2 6.7276787,2 C 7.4325448,2 8,2.5674553 8,3.2723213 
+/* 
+<path *ngIf="!play; else elseBlock" d="M 3.2723216,2 6.7276787,2 C 7.4325448,2 8,2.5674553 8,3.2723213 
           L 8, 6.7276787 C 8,7.4325447 7.4325448,8 6.7276787,8 L 3.2723216, 8 C 2.5674556,8 2,7.4325447 2,6.7276787 
           L 2, 3.2723213 C 2,2.5674553 2.5674556,2 3.2723216,2 Z">
         </path>
@@ -16,7 +11,16 @@ import { Noise } from './noise';
             C 2,2.5674553 3.1273554,1.8552044 3.6258562,2.3535346 Z">
           </path>
         </ng-template>
+*/
+@Component({
+  selector: 'app-root',
+  template: `
+    <div [ngClass]="play ? 'play' : ''" (click)="perform()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+        <path></path>
     </svg>
+
+    <span> {{ ios }}</span>
     </div>
   `,
   styleUrls: ['app.component.css']
@@ -24,8 +28,10 @@ import { Noise } from './noise';
 export class AppComponent implements AfterViewInit{
   noise: Noise;
   play: boolean = false;
+  ios: boolean = false;
 
   ngAfterViewInit(): void {
+    this.ios = /iPad|iPhone|iPod/.test(window.navigator.userAgent);
     this.noise = new Noise();
   }
 
