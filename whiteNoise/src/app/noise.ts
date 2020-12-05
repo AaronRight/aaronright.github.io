@@ -80,12 +80,7 @@
           this.createNoise(track);
           this.setGain(track);
           track.audioSource.loop = true;
-
-          console.log(123)
-
           track.audioSource.start();
-
-          console.log(234)
         }
     
         static template = {
