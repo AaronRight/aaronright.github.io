@@ -9,6 +9,7 @@ import { Noise } from './noise';
 export class AppComponent implements AfterViewInit{
   noise: Noise;
   play: boolean = false;
+  doubleClick: boolean = false;
   ios: boolean = false;
 
   ngAfterViewInit(): void {
@@ -17,25 +18,23 @@ export class AppComponent implements AfterViewInit{
   }
 
   perform() {
-    if (this.play) {
-      this.noise.stopNoise(Noise.template);
+    if(!this.doubleClick){
+      this.doubleClick = true;
+      if (this.play) {
+        this.noise.stopNoise(Noise.template);
+      } else {
+        this.noise.playNoise(Noise.template);
+      }
 
       if(this.ios){
-        let animation = document.getElementsByClassName("animation-2");
+        let animation = document.getElementById("animation");
         // @ts-ignore
-        for (let a of animation) a.beginElement();
+        animation.beginElement();
       }
-    } else {
-      this.noise.playNoise(Noise.template);
-
-      
-      if(this.ios){
-        let animation = document.getElementsByClassName("animation-1");
-        // @ts-ignore
-        for (let a of animation) a.beginElement();
-      }
+  
+      setTimeout(() => {this.play = !this.play; this.doubleClick = false; }, 1000);
     }
-    this.play = !this.play;
+    
   }
 
   title = 'White Noise';
