@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+</head>
+
+<body onload="init()">
+  <canvas id="canvas" width="1000" height="1000" style="border: 1px solid; width: 400px;"
+    onclick="manageRotation()"></canvas>
+
+  <!--script>
+
+    var canvas1 = document.getElementById("canvas");
+    var template = document.getElementById("template").getAttribute("d").split(/[\s,]+/);
+
+    let M = x => y => ctx.moveTo(x, y);
+    let L = x => y => ctx.lineTo(x, y);
+    let C = x1 => y1 => cx => cy => x2 => y2 => ctx.bezierCurveTo(x1, y1, cx, cy, x2, y2);
+
+    var ctx = canvas1.getContext("2d");
+    ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+
+    ctx.beginPath();
+
+    for (let i = 0, f = undefined; i < template.length; i++) {
+      if (f === undefined) switch (template[i]) {
+        case "M": { f = M; break; }
+        case "L": { f = L; break; }
+        case "C": { f = C; break; }
+        default: break;
+      }
+      else { f = f(template[i]) }
+    }
+
+    ctx.fill();
+
+  </script-->
+
+  <script>
+
+    function modifySvg() {
+      var template = square.split(/[\s,]+/);
+
+      let angle = -135;
+
+      let s = Math.sin(angle * Math.PI / 180);
+      let c = Math.cos(angle * Math.PI / 180);
+
+      let Rotate = x => y => {
+        x -= 500; y -= 500;
+
+        let xnew = x * c - y * s;
+        let ynew = x * s + y * c;
+
+        result += ` ${xnew + 500},${ynew + 500} `
+      };
+
+      let Multiply = x => y => {
+        result += ` ${x * 100},${y * 100} `
+      };
+
+      let Translate = x => y => {
+        result += ` ${Number(x) + 100},${Number(y) - 100} `
+      };
+
+      let result = ""
+
+      for (let i = 0, f = undefined; i < template.length; i++) {
+        if (f === undefined) switch (template[i]) {
+          case "M":
+          case "L":
+          case "Z":
+          case "C": { result += template[i]; f = Rotate; break; }
+          default: { f = Rotate; f = f(template[i]); break; };
+        }
+        else { f = f(template[i]) }
+      }
+      console.log(result)
+    }
+
+    function compareSvg() {
+      var template2 = square.split(/[\s,]+/);
+      var template1 = triangle.split(/[\s,]+/);
+
+      let n = 135
+      let diff = new Array(template1.length + 1)
+      let result = new Array(n + 1)
+
+      for (let j = 0; j < template1.length; j++) {
+        if (template1[j] !== template2[j]) diff[j] = (Number(template2[j]) - Number(template1[j])) / n
+      }
+
+      for (let i = 0; i < result.length; i++) {
+        result[i] = new Array(diff.length)
+        for (let j = 0; j < diff.length; j++) {
+          result[i][j] = diff[j] ? (Number(template1[j]) + diff[j] * i) : template1[j]
+        }
+      }
+
+      return result;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+
+    square = "M 410.03327687898815,834.2973455909166  165.70263319587986,589.9667019078083"+
+  " C 115.86107328202843,540.1251419939568  115.86108035309621,459.87485093497526  165.7026331958799,410.03329809219156 "+
+  " L 410.03329809219167,165.70263319587986 "+
+  " C 459.87485093497537,115.86108035309621  540.125141993957,115.86107328202843  589.9667019078083,165.70263319587986 "+
+  " L 834.2973455909166,410.0332768789882 "+
+  " C 884.1388984337004,459.8748297217719  884.1389196469038,540.1251490650247  834.2973668041202,589.9667019078083 "+
+  " L 589.9667019078083,834.2973668041201 "+
+  " C 540.1251490650246,884.1389196469038  459.8748297217719,884.1388984337004  410.03327687898815,834.2973455909166 Z"
+
+  triangle = "M 268.6119206416787,784.3000029821019  268.5786371254883,589.9667019078083 "+
+  " C 268.5665738838012,519.4800917859759  268.5665668127334,480.5199011429562  268.5786371254882,410.03329809219167 "+
+  " L 268.61194185488216,215.70000408896578 "+
+  " C 268.62402630977266,145.21340103820125  398.70378575664745,115.86107328202843  448.5453456704989,165.70263319587986 "+
+  " L 692.8759893536072,410.0332768789882 "+
+  " C 742.7175421963909,459.8748297217719  742.7175634095943,540.1251490650247  692.8760105668107,589.9667019078083 "+
+  " L 448.5453456704988,834.2973668041202 "+
+  " C 398.7037928277151,884.1389196469038  268.62398388336567,854.7865989617987  268.6119206416787,784.3000029821019 Z"
+
+    let rotation = 1;
+    let angle = { value: 0, target: 0, direction: true };
+    let variants = compareSvg()
+
+    function init() {
+      canvas = document.getElementById("canvas");
+      context = canvas.getContext("2d");
+      context.clearRect(0, 0, context.width, context.height);
+      context.fill(new Path2D(triangle))
+    }
+
+    function manageRotation() {
+      if (angle.target == angle.value) {
+        angle.direction = !angle.direction;
+        angle.target = 135
+        angle.value = 0;
+        rotate()
+      } else {
+        angle.direction = !angle.direction;
+        angle.target = 135 + (angle.value - 135)
+        angle.value = 0;
+      }
+    }
+
+    function rotate() {
+      angle.value += rotation;
+
+      const template = document.getElementById("template")
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      context.translate(canvas.width / 2, canvas.height / 2);
+      context.rotate((angle.direction ? 1 : -1) * (rotation * Math.PI) / 180);
+      context.translate(-canvas.width / 2, -canvas.height / 2);
+
+      context.fill(new Path2D(variants[angle.direction ? 135 - angle.value : angle.value].join(" ")))
+
+      if (angle.target > angle.value) {
+        requestAnimationFrame(rotate)
+      }
+    }
+  </script>
+</body>
+
+</html>

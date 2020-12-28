@@ -9,3 +9,11 @@ html, body {
     align-items: center;
     flex: 1;
   }
+
+canvas{ width: 400px;}
+@media (prefers-color-scheme: dark) {
+  body { background: black; }
+}
+@media (prefers-color-scheme: light) {
+  body { background:  white; }
+}
